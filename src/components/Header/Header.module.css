@@ -1,0 +1,114 @@
+/* ================================================== */
+/* HEADER */
+/* ================================================== */
+.Header {
+  position: relative;
+  height: 100vh;
+}
+
+.Profile {
+  height: 100px;
+  width: auto;
+  float: right;
+  margin-top: 55px;
+}
+
+.HeroTextBox {
+  position: absolute;
+  width: 1140px;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.HeroTextBox h1 {
+  color: #2e266f;
+  font-weight: 500;
+  font-size: 72px;
+}
+
+.MainNav {
+  float: left;
+  list-style: none;
+  margin-top: 55px;
+  padding-left: 0px;
+}
+
+.MainNav li {
+  display: inline-block;
+  /* padding: 0 40px 0 0; */
+  margin: 0 40px 0 0;
+  padding-left: 0px;
+}
+
+.MainNav li a:link,
+.MainNav li a:visited {
+  padding: 8px 0;
+  color: #2e266f;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 90%;
+  /* Divided by base font size "20px" */
+  border-bottom: 2px solid transparent;
+  -webkit-transition: border-bottom 0.2s;
+  transition: border-bottom 0.2s;
+}
+
+.MainNav li a:hover,
+.MainNav li a:active {
+  border-bottom: 2px solid #2e266f;
+}
+
+.SearchArea {
+  max-width: 558px !important;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.SearchBar {
+  position: relative;
+  max-width: 670px;
+  width: 100%;
+}
+
+input.Search {
+  width: 100% !important;
+  height: 60px !important;
+  padding-left: 20px !important;
+  padding-right: 40px !important;
+  background-color: #ffffff !important;
+  border: 1px solid #8e8e93 !important;
+  border-radius: 23px !important;
+  font-size: 16px !important;
+  line-height: 16px !important;
+  color: #666666 !important;
+  box-sizing: border-box !important; 
+  margin: 0 !important;
+}
+
+.SearchIcon {
+  position: absolute !important;
+  z-index: 1;
+  top: 21px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.HasSearch .form-control {
+  padding-left: 2.375rem;
+}
+
+.HasSearch .FormControlFeedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}

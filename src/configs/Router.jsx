@@ -1,12 +1,12 @@
 import React from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 
-import Home from '../pages/Home'
+import Homepage from "../pages/Homepage/Homepage";
 
 const Router = () => {
 	return (
 		<BrowserRouter>
-			<Route exact path="/" component={Home} />
+			<Route exact path="/" component={Homepage} />
 		</BrowserRouter>
 	)
 }
