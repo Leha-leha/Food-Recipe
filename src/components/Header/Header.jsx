@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
 import css from "./Header.module.css";
 import SearchIcon from "../../assets/icons/Search.svg";
@@ -42,16 +42,16 @@ class Header extends React.Component {
                   </a>
                 </li>
                 <li className='nav-item'>
-                  <a className='nav-link' href='#profile'>
+                  <Link to={{ pathname: '/profile' }} className='nav-link'>
                     Profile
-                  </a>
+                  </Link>
                 </li>
               </ul>
               <ul className={`navbar-nav mb-2 mt-4 ms-auto mb-lg-0 ${css.Auth}`}>
                 <li className='nav-item' onClick={() => this.props.history.push('/login')}>
                   <a
                     className='nav-link'
-                    href=''
+                    href='/login'
                     tabindex='-1'
                     aria-disabled='true'
                   >
