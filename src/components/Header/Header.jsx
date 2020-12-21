@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 
 import css from "./Header.module.css";
 import SearchIcon from "../../assets/icons/Search.svg";
@@ -47,10 +48,10 @@ class Header extends React.Component {
                 </li>
               </ul>
               <ul className={`navbar-nav mb-2 mt-4 ms-auto mb-lg-0 ${css.Auth}`}>
-                <li className='nav-item'>
+                <li className='nav-item' onClick={() => this.props.history.push('/login')}>
                   <a
                     className='nav-link'
-                    href='#login'
+                    href=''
                     tabindex='-1'
                     aria-disabled='true'
                   >
@@ -86,4 +87,4 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);
