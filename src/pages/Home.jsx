@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+
+import Header from "../components/Header/Header";
 
 class Home extends Component {
   render () {
@@ -11,4 +13,4 @@ class Home extends Component {
   }
 }
 
-export default Home
+export default Home;
