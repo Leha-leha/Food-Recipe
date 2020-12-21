@@ -1,0 +1,101 @@
+/* ================================================== */
+/* HEADER */
+/* ================================================== */
+header {
+  background-image: url(../../assets/images/background.png);
+  background-size: cover;
+  height: 100vh;
+}
+
+/* === NavBar === */
+.MainNav {
+  float: left;
+  list-style: none;
+  margin-top: 55px;
+  padding-left: 0px;
+}
+
+.MainNav li {
+  display: inline-block;
+  /* padding: 0 40px 0 0; */
+  margin: 0 40px 0 0;
+  padding-left: 0px;
+}
+
+.MainNav li a:link,
+.MainNav li a:visited {
+  padding: 8px 0;
+  color: #2e266f;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 90%;
+  border-bottom: 2px solid transparent;
+  -webkit-transition: border-bottom 0.2s;
+  transition: border-bottom 0.2s;
+}
+
+.MainNav li a:hover,
+.MainNav li a:active {
+  border-bottom: 2px solid #2e266f;
+}
+
+.Auth li a {
+  color: #fff;
+  font-size: 90%;
+}
+
+/* === Hero Text === */
+.HeroTextBox {
+  position: absolute;
+  width: 1140px;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.HeroTextBox h1 {
+  color: #2e266f;
+  font-weight: 500;
+  font-size: 240%;
+  word-spacing: 4px;
+  letter-spacing: 1px;
+}
+
+/* === Search Input === */
+.SearchArea {
+  max-width: 358px !important;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.SearchBar {
+  position: relative;
+  max-width: 670px;
+  width: 100%;
+}
+
+input.Search {
+  width: 100% !important;
+  height: 60px !important;
+  padding-left: 20px !important;
+  padding-right: 40px !important;
+  background-color: #EFEFEF;
+  border: 1px solid #8e8e93 !important;
+  border-radius: 23px !important;
+  font-size: 16px !important;
+  line-height: 16px !important;
+  color: #666666 !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+}
+
+.SearchIcon {
+  position: absolute !important;
+  z-index: 1;
+  top: 21px;
+  right: 20px;
+  cursor: pointer;
+}
