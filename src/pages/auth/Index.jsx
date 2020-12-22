@@ -12,7 +12,7 @@ export default class Index extends Component {
       <div className="container-fluid h-100">
         <div className="row">
           <div
-            className="position-relative d-none d-md-block col-md-4 col-lg-6 p-0"
+            className="position-relative d-none ml-n5 d-md-block col-md-4 col-lg-6 p-0"
             style={{ backgroundColor: "yellow" }}
           >
             <img
