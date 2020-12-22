@@ -13,10 +13,20 @@
 	src: url(assets/fonts/airbnb-cereal-app/AirbnbCerealMedium.ttf);
 }
 
+@font-face {
+	font-family: 'Airbnb Cereal App Light';
+	src: url(assets/fonts/airbnb-cereal-app/AirbnbCerealLight.ttf);
+}
+
 body {
 	font-family: 'Airbnb Cereal App Bold';
 }
 
 .my-navbar a {
 	padding: 0px;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #707070;
 }

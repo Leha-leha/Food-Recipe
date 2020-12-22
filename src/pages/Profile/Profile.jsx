@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import DetailProfile from '../../components/Profile/Profile'
+import Footer from '../../components/Footer/Footer'
 
 class Profile extends Component {
 	render () {
@@ -8,6 +9,7 @@ class Profile extends Component {
 			<>
 				<Navbar />
 				<DetailProfile />
+				<Footer />
 			</>
 		)
 	}
