@@ -6,7 +6,7 @@ import "./index.css";
 import Mama from "../../assets/Group 697.png";
 import Background from "../../assets/76c7e3577554580136d5f65222046a21.png";
 
-export default class Index extends Component {
+export default class Forgot extends Component {
   render() {
     return (
       <div className="container-fluid h-100">
@@ -27,58 +27,32 @@ export default class Index extends Component {
           </div>
           <div className="full d-flex justify-content-center align-items-center col-12 col-md-8 col-lg-6">
             <div className="col-10 col-md-8 col-xl-6 d-flex flex-column justify-content-center align-items-center font-weight-medium">
-              <h2 className="main font-weight-bold">Welcome</h2>
-              <span className="log mt-4 mb-4 font-weight-normal">
-                Log In into your existing account
+              <h2 className="main font-weight-bold mt-n5">Forgot Password?</h2>
+              <span
+                className="log mt-4 mb-4 font-weight-normal text-center"
+                style={{ fontSize: "15px" }}
+              >
+                We just need your registered e-mail address to send your
+                password resend
               </span>
               <Form className="w-100 mb-3 mt-3">
                 <Form.Group controlId="formBasicEmail">
-                  <Form.Label>E-mail</Form.Label>
+                  <Form.Label>Email</Form.Label>
                   <Form.Control
                     type="email"
-                    placeholder="Enter email"
+                    placeholder="Email"
                     className="pt-4 pb-4 pl-4 pr-0 input"
                     required
                   />
                 </Form.Group>
-
-                <Form.Group controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    className="pt-4 pb-4 pl-4 pr-0 input"
-                    required
-                  />
-                </Form.Group>
-
-                <Form.Group controlId="formBasicCheckbox">
-                  <Form.Check
-                    type="checkbox"
-                    label="I agree to terms & conditions"
-                    required
-                  />
-                </Form.Group>
-
                 <Button
                   variant="warning"
                   type="submit"
                   className="w-100 btn-main pt-2 pb-2 font-weight-medium"
                 >
-                  Log In
+                  Send Email
                 </Button>
               </Form>
-              <div className="w-100 d-flex justify-content-end">
-              <Link to="/forgot" className="log text-decoration-none">
-                Forgot Password?
-              </Link>
-              </div>
-              <span className="text-center mt-3" style={{color:"#8692A6"}} >
-                Don't have an account?
-                <Link to="/register" className="main text-decoration-none">
-                  Sign Up
-                </Link>
-              </span>
             </div>
           </div>
         </div>
