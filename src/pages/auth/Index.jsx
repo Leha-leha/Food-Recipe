@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -7,6 +8,30 @@ import Mama from "../../assets/Group 697.png";
 import Background from "../../assets/76c7e3577554580136d5f65222046a21.png";
 
 export default class Index extends Component {
+  handleSubmit = (e) => {
+    e.preventDefault();
+    //const { dispatch, auth } = this.props;
+    const data = {
+      email_user: this.email,
+      password_user: this.password,
+    };
+
+    axios
+      .post("http://localhost:5000/auth/login", data)
+      .then((res) => {
+        localStorage.setItem("token", res.data.data);
+        //res.headers["x-access-token"] = res.data.data;
+        //dispatch({ type: "LOGIN" });
+        //console.log(auth.isLogin);
+        //console.log(this.props.auth);
+        console.log(res);
+        //console.log(res.headers);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.props.history.push("/");
+  };
   render() {
     return (
       <div className="container-fluid h-100">
@@ -31,13 +56,14 @@ export default class Index extends Component {
               <span className="log mt-4 mb-4 font-weight-normal">
                 Log In into your existing account
               </span>
-              <Form className="w-100 mb-3 mt-3">
+              <Form className="w-100 mb-3 mt-3" onSubmit={this.handleSubmit}>
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>E-mail</Form.Label>
                   <Form.Control
                     type="email"
                     placeholder="Enter email"
                     className="pt-4 pb-4 pl-4 pr-0 input"
+                    onChange={(e) => (this.email = e.target.value)}
                     required
                   />
                 </Form.Group>
@@ -48,6 +74,7 @@ export default class Index extends Component {
                     type="password"
                     placeholder="Password"
                     className="pt-4 pb-4 pl-4 pr-0 input"
+                    onChange={(e) => (this.password = e.target.value)}
                     required
                   />
                 </Form.Group>
@@ -69,11 +96,11 @@ export default class Index extends Component {
                 </Button>
               </Form>
               <div className="w-100 d-flex justify-content-end">
-              <Link to="/forgot" className="log text-decoration-none">
-                Forgot Password?
-              </Link>
+                <Link to="/forgot" className="log text-decoration-none">
+                  Forgot Password?
+                </Link>
               </div>
-              <span className="text-center mt-3" style={{color:"#8692A6"}} >
+              <span className="text-center mt-3" style={{ color: "#8692A6" }}>
                 Don't have an account?
                 <Link to="/register" className="main text-decoration-none">
                   Sign Up
