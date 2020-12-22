@@ -1,0 +1,61 @@
+a {
+	margin: 0px;
+}
+
+.Navbar {
+	padding: 40px 0px;
+	color: #2E266F;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 10;
+}
+
+.NavLink {
+	margin-right: 4vw;
+	color: #2E266F !important;
+}
+.NavLink:hover {
+	border-bottom: 1px solid #2E266F;
+}
+
+.DefaultUserLogin {
+	padding: 14px 11px;
+	background-color: #FFFFFF;
+	border-radius: 50px;
+	position: relative;
+}
+
+.DefaultUserLogin img {
+	height: 24px;
+	width: 30px;
+}
+
+.isNotif {
+	width: 15px;
+	height: 15px;
+	background-color: #31A24C;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	border-radius: 15px;
+}
+
+@media only screen and (max-width: 576px) {
+	.NavLink {
+		font-size: 13px;
+	}
+	.DefaultUserLogin {
+		padding: 11px 9px;
+	}
+	.DefaultUserLogin img {
+		height: 20px;
+		width: 26px;
+	}
+	
+	.isNotif {
+		width: 12px;
+		height: 12px;
+	}
+}
