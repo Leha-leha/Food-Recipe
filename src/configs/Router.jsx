@@ -8,6 +8,7 @@ import Forgot from "../pages/auth/Forgot";
 import Profile from '../pages/Profile/Profile'
 import Code from "../pages/auth/Code";
 import Reset from "../pages/auth/Reset";
+import Chat from "../pages/chat/Chat";
 
 const Router = () => {
 	return (
@@ -19,6 +20,7 @@ const Router = () => {
 			<Route path="/code" component={Code} />
 			<Route path="/reset" component={Reset} />
 			<Route path='/profile' component={Profile} />
+			<Route path='/chat' component={Chat} />
 		</BrowserRouter>
 	)
 }
