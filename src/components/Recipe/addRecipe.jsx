@@ -34,7 +34,7 @@ let Addon = () => {
   }
 
 
-  console.log(setForm)
+  console.log(setForm.files)
   return (
     <div style={{ marginBottom: "20rem" }}>
       <Container
