@@ -6,9 +6,10 @@ import Login from '../pages/auth/Index';
 import Register from "../pages/auth/Register";
 import Forgot from "../pages/auth/Forgot";
 import Profile from '../pages/Profile/Profile'
-import Code from "../pages/auth/Code";
+import Code from "../pages/auth/codeReset";
 import Reset from "../pages/auth/Reset";
 import Chat from "../pages/chat/Chat";
+import addRecipe from "../pages/recipes/addRecipe";
 
 const Router = () => {
 	return (
@@ -21,6 +22,7 @@ const Router = () => {
 			<Route path="/reset" component={Reset} />
 			<Route path='/profile' component={Profile} />
 			<Route path='/chat' component={Chat} />
+			<Route path='/addRecipe' component={addRecipe} />
 		</BrowserRouter>
 	)
 }
