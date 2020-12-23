@@ -11,7 +11,7 @@ class Navbar extends React.Component {
         <nav className='navbar navbar-expand-lg'>
           <div className='container'>
             <button
-              className='navbar-toggler'
+              className={`navbar-toggler ${css.NavToggler}`}
               type='button'
               data-bs-toggle='collapse'
               data-bs-target='#navbarSupportedContent'
@@ -19,7 +19,7 @@ class Navbar extends React.Component {
               aria-expanded='false'
               aria-label='Toggle navigation'
             >
-              <span class='navbar-toggler-icon'></span>
+              <i class='fas fa-bars'></i>
             </button>
             <div
               className='collapse navbar-collapse'

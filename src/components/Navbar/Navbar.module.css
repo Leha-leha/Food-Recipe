@@ -30,8 +30,13 @@
   border-bottom: 2px solid #2e266f;
 }
 
+.NavToggler {
+	/* color: black;
+	background-color: black; */
+}
+
 .Auth li a {
-  color: #fff;
+  color: #2e266f;
   font-size: 90%;
 }
 /* a {
