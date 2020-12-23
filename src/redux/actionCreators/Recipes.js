@@ -4,7 +4,7 @@ import { uploadRecipe } from './actionType';
 
 
 
-const getUrl = "http://localhost:8000"
+const getUrl = "http://localhost:5000"
 export const getRecipeCreator = () => {
     
     const headers = {};
