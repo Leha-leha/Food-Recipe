@@ -16,18 +16,24 @@ export default class Register extends Component {
       password: this.password_user,
     };
     axios
-    .post("http://localhost:5000/auth/signup" , data)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+      .post("http://localhost:5000/auth/signup", data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     this.props.history.push("/login");
 
     console.log(data);
-  }
+  };
+  // validate(){
+  //   let isValid = true;
+  //   if(this.confirm_password_user != this.password_user){
+  //     isValid = false
+  //   }
+  // }
   render() {
     return (
       <div className="container-fluid h-100">
@@ -94,7 +100,7 @@ export default class Register extends Component {
                     placeholder="Create New Password"
                     className="pt-4 pb-4 pl-4 pr-0 input"
                     required
-                    onChange={(e) => this.password_user = e.target.value}
+                    onChange={(e) => (this.password_user = e.target.value)}
                   />
                 </Form.Group>
                 <Form.Group controlId="formBasicConfirmPassword">
@@ -104,7 +110,9 @@ export default class Register extends Component {
                     placeholder="New Password"
                     className="pt-4 pb-4 pl-4 pr-0 input"
                     required
-                    onChange={(e) => this.password_user = e.target.value}
+                    onChange={(e) =>
+                      (this.confirm_password_user = e.target.value)
+                    }
                   />
                 </Form.Group>
                 <Form.Group controlId="formBasicCheckbox">
@@ -127,7 +135,6 @@ export default class Register extends Component {
                   <span className="log font-weight-normal d-flex justify-content-center">
                     Already have account?
                     <Link to="/login" className="main text-decoration-none">
-                      
                       Log in Here
                     </Link>
                   </span>

@@ -1,74 +1,122 @@
 import React from "react";
+import axios from "axios";
 import { withRouter, Link } from "react-router-dom";
 
 import css from "./Navbar.module.css";
 
+import { connect } from "react-redux";
+
 class Navbar extends React.Component {
-	render() {
-		return (
+  logout = () => {
+    const { dispatch } = this.props;
+    const config = {
+      headers: {
+        "x-access-token": "Bearer " + localStorage.getItem("token"),
+      },
+    };
+    axios
+      .delete("http://localhost:5000/auth/logout", config)
+      .then((res) => {
+        console.log(res);
+        dispatch({ type: "Logout" });
+        localStorage.setItem("token", "");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  render() {
+    const { auth } = this.props;
+    return (
       <>
         {/* NAVBAR */}
-        <nav className='navbar navbar-expand-lg'>
-          <div className='container'>
+        <nav className="navbar navbar-expand-lg">
+          <div className="container">
             <button
               className={`navbar-toggler ${css.NavToggler}`}
-              type='button'
-              data-bs-toggle='collapse'
-              data-bs-target='#navbarSupportedContent'
-              aria-controls='navbarSupportedContent'
-              aria-expanded='false'
-              aria-label='Toggle navigation'
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
             >
-              <i class='fas fa-bars'></i>
+              <i class="fas fa-bars"></i>
             </button>
             <div
-              className='collapse navbar-collapse'
-              id='navbarSupportedContent'
+              className="collapse navbar-collapse"
+              id="navbarSupportedContent"
             >
               <ul className={`navbar-nav mb-2 mt-4 mb-lg-0 ${css.MainNav}`}>
-                <li className='nav-item'>
-                  <Link to={{ pathname: "/" }} className='nav-link active'>
+                <li className="nav-item">
+                  <Link to={{ pathname: "/" }} className="nav-link active">
                     Home
                   </Link>
                 </li>
-                <li className='nav-item'>
-                  <Link to={{ pathname: "/addrecipe" }} className='nav-link'>
+                <li className="nav-item">
+                  <Link to={{ pathname: "/addrecipe" }} className="nav-link">
                     Add Recipes
                   </Link>
                 </li>
-                <li className='nav-item'>
-                  <Link to={{ pathname: "/profile" }} className='nav-link'>
+                <li className="nav-item">
+                  <Link to={{ pathname: "/profile" }} className="nav-link">
                     Profile
                   </Link>
                 </li>
               </ul>
-              <ul
-                className={`navbar-nav mb-2 mt-4 ms-auto mb-lg-0 ${css.Auth}`}
-              >
-                <li
-                  className='nav-item'
-                  onClick={() => this.props.history.push("/login")}
+              {auth.isLogin ? (
+                <ul
+                  className={`navbar-nav mb-2 mt-4 ms-auto mb-lg-0 ${css.Auth}`}
                 >
-                  <a
-                    className='nav-link'
-                    href='/login'
-                    tabindex='-1'
-                    aria-disabled='true'
+                  <li className="nav-item" onClick={this.logout}>
+                    <a
+                    // className="nav-link"
+                    // href="/"
+                    // tabindex="-1"
+                    // aria-disabled="true"
+                    >
+                      <i className="fas fa-user-circle me-2"></i>
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              ) : (
+                <ul
+                  className={`navbar-nav mb-2 mt-4 ms-auto mb-lg-0 ${css.Auth}`}
+                >
+                  <li
+                    className="nav-item"
+                    onClick={() => this.props.history.push("/login")}
                   >
-                    <i className='fas fa-user-circle me-2'></i>
-                    Login
-                  </a>
-                </li>
-              </ul>
+                    <a
+                      className="nav-link"
+                      href="/login"
+                      tabindex="-1"
+                      aria-disabled="true"
+                    >
+                      <i className="fas fa-user-circle me-2"></i>
+                      Login
+                    </a>
+                  </li>
+                </ul>
+              )}
             </div>
           </div>
         </nav>
       </>
     );
-	}
+  }
 }
 
-export default withRouter(Navbar);
+const mapStateToProps = ({ auth }) => {
+  return {
+    auth,
+  };
+};
+
+export default connect(mapStateToProps)(Navbar);
+
+//export default withRouter(Navbar);
 // import React, { Component } from 'react'
 // import { Container, Navbar, Nav } from 'react-bootstrap'
 
