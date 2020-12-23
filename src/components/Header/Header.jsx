@@ -37,9 +37,9 @@ class Header extends React.Component {
                   </a>
                 </li>
                 <li className='nav-item'>
-                  <a className='nav-link' href='#add'>
-                    Add Recipe
-                  </a>
+                  <Link to={{ pathname: '/addrecipe'}} className='nav-link'>
+                  Add Recipes
+                  </Link>
                 </li>
                 <li className='nav-item'>
                   <Link to={{ pathname: '/profile' }} className='nav-link'>

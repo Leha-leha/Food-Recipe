@@ -13,11 +13,10 @@ export default class Register extends Component {
       user_name: this.name_user,
       email: this.email_user,
       phone_num: this.phone_user,
-      new_password: this.password_user,
       password: this.password_user,
     };
     axios
-    .post(process.env.REACT_APP_URL + "/auth/signup" , data)
+    .post("http://localhost:5000/auth/signup" , data)
     .then((res) => {
       console.log(res);
     })
@@ -56,7 +55,7 @@ export default class Register extends Component {
               >
                 Create new account to access all features
               </span>
-              <Form className="w-100 mb-3 mt-3">
+              <Form className="w-100 mb-3 mt-3" onSubmit={this.handleSubmit}>
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>Name</Form.Label>
                   <Form.Control
@@ -75,7 +74,7 @@ export default class Register extends Component {
                     placeholder="Enter email address"
                     className="pt-4 pb-4 pl-4 pr-0 input"
                     required
-                    onChange={(e) => (this.email = e.target.value)}
+                    onChange={(e) => (this.email_user = e.target.value)}
                   />
                 </Form.Group>
                 <Form.Group controlId="formBasicNumber">
@@ -85,7 +84,7 @@ export default class Register extends Component {
                     placeholder="08xxxxxxxxxx"
                     className="pt-4 pb-4 pl-4 pr-0 input"
                     required
-                    onChange={(e) => (this.phone_num = e.target.value)}
+                    onChange={(e) => (this.phone_user = e.target.value)}
                   />
                 </Form.Group>
                 <Form.Group controlId="formBasicPassword">
@@ -95,7 +94,7 @@ export default class Register extends Component {
                     placeholder="Create New Password"
                     className="pt-4 pb-4 pl-4 pr-0 input"
                     required
-                    onChange={(e) => this.new_password = e.target.value}
+                    onChange={(e) => this.password_user = e.target.value}
                   />
                 </Form.Group>
                 <Form.Group controlId="formBasicConfirmPassword">

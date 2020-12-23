@@ -1,0 +1,62 @@
+.ContainerOne {
+  background: #f6f5f4;
+  width: 986px;
+  height: 280px;
+  position: relative;
+  top: 10rem;
+  border-radius: 15px;
+}
+
+.ContainerTwo {
+  background: #f6f5f4;
+  width: 986px;
+  height: 80px;
+  position: relative;
+  top: 13.5rem;
+  padding-left: 2.6rem;
+  border-radius: 15px;
+}
+
+.UploadBtn {
+  border: none;
+  box-sizing: unset;
+  background-color: #f6f5f4;
+  position: relative;
+  top: 2rem;
+}
+
+.FormInput {
+  position: relative;
+  top: 12rem;
+}
+
+.Title {
+  background: #f6f5f4;
+  width: 942px;
+  height: 80px;
+  border-radius: 15px;
+  border: none;
+  padding-left: 3rem;
+  box-sizing: unset;
+}
+
+.TextArea {
+  background: #f6f5f4;
+  width: 942px;
+  height: 180px;
+  border-radius: 15px;
+  border: none;
+  padding-left: 3rem;
+  box-sizing: unset;
+}
+
+.PostBtn {
+  position: relative;
+  width: 426px;
+  height: 64px;
+  left: 20rem;
+  top: 14rem;
+
+  background: #efc81a;
+  border-radius: 6px;
+}

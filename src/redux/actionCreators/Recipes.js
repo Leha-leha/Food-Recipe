@@ -1,8 +1,12 @@
 import axios from "axios";
+import { uploadNewRecipe } from "../../utils/Api"
+import { uploadRecipe } from './actionType';
 
-const getUrl = process.env.REACT_BASE_URL;
 
+
+const getUrl = "http://localhost:8000"
 export const getRecipeCreator = () => {
+    
     const headers = {};
     return {
         type: "GEt_ALL_RECIPES",
@@ -16,3 +20,11 @@ export const getSingleRecipe = (id) => {
         payload: axios.get(getUrl + "/recipe" + id),
     }
 }
+
+
+export const uploadRecipeCreator = (title_rcp,img_rcp,ingredients_rcp,video_rcp)=>{
+    return {
+      type:uploadNewRecipe,
+      payload:uploadRecipe(title_rcp,img_rcp,ingredients_rcp,video_rcp),
+    }
+  }
