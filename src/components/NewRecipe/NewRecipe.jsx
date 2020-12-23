@@ -4,12 +4,13 @@ import Burger from "../../assets/images/burger.png";
 function NewRecipe() {
   return (
     <main id={css.Main}>
+      <div style={{ float: "none" }}></div>
       <div className='container'>
         <div className={`${css.HeadLine} mb-5`}>
           <h2>New Recipe</h2>
         </div>
         <div className={css.HeroImage}>
-          <img src={Burger} alt='burger' />
+          <img src={Burger} alt='burger' className='img-fluid' />
         </div>
         <div className={css.HeroText}>
           <h2>
@@ -26,6 +27,7 @@ function NewRecipe() {
           </button>
         </div>
       </div>
+      <div style={{ float: "none" }}></div>
     </main>
   );
 }
