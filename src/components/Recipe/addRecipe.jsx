@@ -17,7 +17,7 @@ let Addon = () => {
 
   const [form,setForm]=useState({
     title_rcp:null,
-    img_rcp:null,
+    img_rcp:[],
     ingredients_rcp:null,
     video_rcp:null,
     files:[],
@@ -34,6 +34,7 @@ let Addon = () => {
   }
 
 
+  console.log(setForm)
   return (
     <div style={{ marginBottom: "20rem" }}>
       <Container
@@ -57,10 +58,12 @@ let Addon = () => {
           onChange={(e)=>setForm({...form,ingredients_rcp:e.target.value})}
         ></textarea>
       </div>
-      <Container fluid className={`${css.ContainerTwo}`}>
-        <button className={css.UploadBtn}>Video</button>
+      <Container fluid className={`${css.ContainerTwo}`} >
+        <button className={css.UploadBtn} onClick={handleClickUpload}>Video</button>
       </Container>
+      <div className="d-flex justify-content-center">
         <button className={`${css.PostBtn} mt-5`} onClick={handleSubmit}>Post</button>
+        </div>
     </div>
   );
 };
