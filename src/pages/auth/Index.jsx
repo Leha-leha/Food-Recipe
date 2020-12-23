@@ -6,11 +6,16 @@ import { Link } from "react-router-dom";
 import "./index.css";
 import Mama from "../../assets/Group 697.png";
 import Background from "../../assets/76c7e3577554580136d5f65222046a21.png";
+import { Redirect } from "react-router-dom";
 
-export default class Index extends Component {
+import Navbar from "../../components/Navbar/Navbar";
+
+import { connect } from "react-redux";
+
+class Index extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
-    //const { dispatch, auth } = this.props;
+    const { dispatch, auth } = this.props;
     const data = {
       email_user: this.email,
       password_user: this.password,
@@ -21,20 +26,22 @@ export default class Index extends Component {
       .then((res) => {
         localStorage.setItem("token", res.data.data);
         //res.headers["x-access-token"] = res.data.data;
-        //dispatch({ type: "LOGIN" });
-        //console.log(auth.isLogin);
-        //console.log(this.props.auth);
+        dispatch({ type: "Login" });
+        console.log(auth.isLogin);
+        console.log(this.props.auth);
         console.log(res);
         //console.log(res.headers);
       })
       .catch((err) => {
         console.log(err);
       });
-    this.props.history.push("/");
   };
   render() {
+    const { auth } = this.props;
+    console.log(auth);
     return (
       <div className="container-fluid h-100">
+        {auth.isLogin && <Redirect to="/" />}
         <div className="row">
           <div
             className="position-relative d-none d-md-block col-md-4 col-lg-6 p-0"
@@ -113,3 +120,11 @@ export default class Index extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ auth }) => {
+  return {
+    auth,
+  };
+};
+
+export default connect(mapStateToProps)(Index);
