@@ -5,8 +5,29 @@ import { Link } from "react-router-dom";
 import "./index.css";
 import Mama from "../../assets/Group 697.png";
 import Background from "../../assets/76c7e3577554580136d5f65222046a21.png";
+import axios from "axios";
 
 export default class Register extends Component {
+  handleSubmit = (e) => {
+    const data = {
+      user_name: this.name_user,
+      email: this.email_user,
+      phone_num: this.phone_user,
+      password: this.password_user,
+    };
+    axios
+    .post("http://localhost:5000/auth/signup" , data)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+    this.props.history.push("/login");
+
+    console.log(data);
+  }
   render() {
     return (
       <div className="container-fluid h-100">
@@ -34,7 +55,7 @@ export default class Register extends Component {
               >
                 Create new account to access all features
               </span>
-              <Form className="w-100 mb-3 mt-3">
+              <Form className="w-100 mb-3 mt-3" onSubmit={this.handleSubmit}>
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>Name</Form.Label>
                   <Form.Control
@@ -42,6 +63,7 @@ export default class Register extends Component {
                     placeholder="Name"
                     className="pt-4 pb-4 pl-4 pr-0 input"
                     required
+                    onChange={(e) => (this.user_name = e.target.value)}
                   />
                 </Form.Group>
 
@@ -52,6 +74,7 @@ export default class Register extends Component {
                     placeholder="Enter email address"
                     className="pt-4 pb-4 pl-4 pr-0 input"
                     required
+                    onChange={(e) => (this.email_user = e.target.value)}
                   />
                 </Form.Group>
                 <Form.Group controlId="formBasicNumber">
@@ -61,6 +84,7 @@ export default class Register extends Component {
                     placeholder="08xxxxxxxxxx"
                     className="pt-4 pb-4 pl-4 pr-0 input"
                     required
+                    onChange={(e) => (this.phone_user = e.target.value)}
                   />
                 </Form.Group>
                 <Form.Group controlId="formBasicPassword">
@@ -70,6 +94,7 @@ export default class Register extends Component {
                     placeholder="Create New Password"
                     className="pt-4 pb-4 pl-4 pr-0 input"
                     required
+                    onChange={(e) => this.password_user = e.target.value}
                   />
                 </Form.Group>
                 <Form.Group controlId="formBasicConfirmPassword">
@@ -79,6 +104,7 @@ export default class Register extends Component {
                     placeholder="New Password"
                     className="pt-4 pb-4 pl-4 pr-0 input"
                     required
+                    onChange={(e) => this.password_user = e.target.value}
                   />
                 </Form.Group>
                 <Form.Group controlId="formBasicCheckbox">
