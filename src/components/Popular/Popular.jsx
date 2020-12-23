@@ -4,12 +4,13 @@ import RamenNoodles from "../../assets/images/healthy-bone-broth-ramen.png";
 function Popular() {
   return (
     <main>
-      <div className='container'>
+      <div style={{float: "none"}}></div>
+      <div className='container container-sm'>
         <div className={`${css.HeadLine} mb-5`}>
           <h2>Popular For You!</h2>
         </div>
         <div className={css.HeroImage}>
-          <img src={RamenNoodles} alt='ramen' />
+          <img src={RamenNoodles} alt='ramen' className='img-fluid' />
         </div>
         <div className={css.HeroText}>
           <h2>

@@ -7,43 +7,6 @@ header {
   height: 100vh;
 }
 
-/* === NavBar === */
-.MainNav {
-  float: left;
-  list-style: none;
-  margin-top: 55px;
-  padding-left: 0px;
-}
-
-.MainNav li {
-  display: inline-block;
-  /* padding: 0 40px 0 0; */
-  margin: 0 40px 0 0;
-  padding-left: 0px;
-}
-
-.MainNav li a:link,
-.MainNav li a:visited {
-  padding: 8px 0;
-  color: #2e266f;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-size: 90%;
-  border-bottom: 2px solid transparent;
-  -webkit-transition: border-bottom 0.2s;
-  transition: border-bottom 0.2s;
-}
-
-.MainNav li a:hover,
-.MainNav li a:active {
-  border-bottom: 2px solid #2e266f;
-}
-
-.Auth li a {
-  color: #fff;
-  font-size: 90%;
-}
-
 /* === Hero Text === */
 .HeroTextBox {
   position: absolute;
@@ -98,4 +61,23 @@ input.Search {
   top: 21px;
   right: 20px;
   cursor: pointer;
+}
+
+
+/* SMALL DEVICES 0 - 480PX */
+@media only screen and (max-width: 600px) {
+  header {
+    background-image: none;
+  }
+
+  .HeroTextBox {
+    width: 100%;
+  }
+}
+
+/* SMALL PHONES TO SMALL TABLETS 481PX - 767PX */
+@media only screen and (max-width: 768px) {
+  header {
+    background: none;
+  }
 }

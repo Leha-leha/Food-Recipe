@@ -1,6 +1,7 @@
 main {
   height: 100vh;
   margin-top: 50px;
+  
 }
 
 .HeadLine {
@@ -49,4 +50,45 @@ main {
 
 .Btn:hover {
   color: #fff;
+}
+
+@media only screen and (max-width: 600px) {
+  main {
+    width: 100%;
+    margin-bottom: 370px;
+  }
+
+  .HeroImage {
+    float: none;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .HeroText {
+    float: none;
+    margin-top: 15px;
+    text-align: center;
+  }
+
+  .HeroText h2::after {
+    margin: 0 auto;
+    margin-top: 30px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .HeroImage img {
+    width: 300px;
+  }
+
+  .HeroText {
+    width: 350px;
+    margin-top: 0;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  main {
+    margin-bottom: 150px;
+  }
 }
