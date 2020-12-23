@@ -1,0 +1,55 @@
+main#Main {
+  height: 100vh;
+  background-image: url(../../assets/images/background-2.png);
+  background-size: cover;
+}
+
+.HeadLine {
+  padding: 10px;
+  border-left: 10px solid #EFC81A;
+}
+
+
+.HeroImage {
+  float: left;
+  margin-top: 50px;
+}
+
+.HeroImage img {
+  width: 400px;
+}
+
+.HeroText {
+  float: right;
+  margin-top: 90px;
+}
+
+.HeroText h2 {
+  font-size: 180%;
+  word-spacing: 2px;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+
+.HeroText h2:after {
+  display: block;
+  height: 2px;
+  background-color: #6f6a40;
+  content: " ";
+  width: 100px;
+  margin-top: 30px;
+}
+
+.LongParagraph {
+  line-height: 145%;
+}
+
+.Btn {
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 20px;
+}
+
+.Btn:hover {
+  color: #fff;
+}
