@@ -11,6 +11,7 @@ class Profile extends Component {
     showEdit: false,
     profile: {},
     myrecipe: [],
+    likedrecipe: [],
   };
 
   myListActive = (e) => {
@@ -71,15 +72,30 @@ class Profile extends Component {
       });
   };
 
+  getLikedRecipe = async () => {
+    const userid = await localStorage.getItem("userId");
+    axios
+      .get(`http://localhost:5000/likes/${userid}`)
+      .then((res) => {
+        this.setState({
+          likedrecipe: res.data.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   componentDidMount = () => {
     this.getUser();
     this.getMyRecipe();
+    this.getLikedRecipe();
   };
 
   render() {
-    console.log(this.state.profile);
+    console.log(this.state);
     //console.log(this.state.myrecipe);
-    const { myrecipe } = this.state;
+    const { myrecipe, likedrecipe } = this.state;
     console.log(myrecipe);
     return (
       <>
@@ -194,30 +210,19 @@ class Profile extends Component {
           </div>
           <div className={profile.ItemList} id="LikedSection">
             <div className={profile.CardWrapper}>
-              <div
-                className={profile.CardList}
-                style={{
-                  backgroundImage: `url('https://s3-alpha-sig.figma.com/img/16ad/8dbf/cfef9bb1fc6e0bef50d5c8ef7a6cdff6?Expires=1609718400&Signature=UsZkvjrgMz8JuKi4CYyo~vOSqmIp~8GkJ-D3kKqZXa48UtXQ1nAnxkBredr1KFnMSBISKGHG6Kgq-dkYCpE6X3GW~MlHwQ74XYi9rtmsuGw2HYyGl7ZoRzEnWZMNmcXYmCJ1Xpzt1XpWTpq4pG6~XaTpZsZAD2idgx3Oxdl~NhA80tYybTrn6o6FCGfYoIOh9DcRWGczi23CXynx8M5ehqXa~8OoBRhaHDS3v7bcp2ftxYrk7oFu9EltKmF7ZGQeUgjBiIVJQipCkcbOJvN5gqLjONm80XLClyau4l~-12cXbWb6lJk1q-SLdD1xod7lci8Uo9DipHxe~IWyeCGtDA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA')`,
-                }}
-              >
-                <h1>Bomb Chicken</h1>
-              </div>
-              <div
-                className={profile.CardList}
-                style={{
-                  backgroundImage: `url('https://s3-alpha-sig.figma.com/img/16ad/8dbf/cfef9bb1fc6e0bef50d5c8ef7a6cdff6?Expires=1609718400&Signature=UsZkvjrgMz8JuKi4CYyo~vOSqmIp~8GkJ-D3kKqZXa48UtXQ1nAnxkBredr1KFnMSBISKGHG6Kgq-dkYCpE6X3GW~MlHwQ74XYi9rtmsuGw2HYyGl7ZoRzEnWZMNmcXYmCJ1Xpzt1XpWTpq4pG6~XaTpZsZAD2idgx3Oxdl~NhA80tYybTrn6o6FCGfYoIOh9DcRWGczi23CXynx8M5ehqXa~8OoBRhaHDS3v7bcp2ftxYrk7oFu9EltKmF7ZGQeUgjBiIVJQipCkcbOJvN5gqLjONm80XLClyau4l~-12cXbWb6lJk1q-SLdD1xod7lci8Uo9DipHxe~IWyeCGtDA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA')`,
-                }}
-              >
-                <h1>Bomb Chicken</h1>
-              </div>
-              <div
-                className={profile.CardList}
-                style={{
-                  backgroundImage: `url('https://s3-alpha-sig.figma.com/img/16ad/8dbf/cfef9bb1fc6e0bef50d5c8ef7a6cdff6?Expires=1609718400&Signature=UsZkvjrgMz8JuKi4CYyo~vOSqmIp~8GkJ-D3kKqZXa48UtXQ1nAnxkBredr1KFnMSBISKGHG6Kgq-dkYCpE6X3GW~MlHwQ74XYi9rtmsuGw2HYyGl7ZoRzEnWZMNmcXYmCJ1Xpzt1XpWTpq4pG6~XaTpZsZAD2idgx3Oxdl~NhA80tYybTrn6o6FCGfYoIOh9DcRWGczi23CXynx8M5ehqXa~8OoBRhaHDS3v7bcp2ftxYrk7oFu9EltKmF7ZGQeUgjBiIVJQipCkcbOJvN5gqLjONm80XLClyau4l~-12cXbWb6lJk1q-SLdD1xod7lci8Uo9DipHxe~IWyeCGtDA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA')`,
-                }}
-              >
-                <h1>Bomb Chicken</h1>
-              </div>
+              {likedrecipe &&
+                likedrecipe.map(({ title_rcp, img_rcp }) => {
+                  return (
+                    <div
+                      className={profile.CardList}
+                      style={{
+                        backgroundImage: `url('${JSON.parse(img_rcp)}')`,
+                      }}
+                    >
+                      <h1>{title_rcp}</h1>
+                    </div>
+                  );
+                })}
             </div>
           </div>
         </Container>
