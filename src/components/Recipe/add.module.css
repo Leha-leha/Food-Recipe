@@ -54,9 +54,9 @@
   position: relative;
   width: 426px;
   height: 64px;
-  left: 20rem;
   top: 14rem;
-
+  border: none;
+  color: white;
   background: #efc81a;
   border-radius: 6px;
 }

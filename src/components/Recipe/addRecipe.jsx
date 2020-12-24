@@ -13,14 +13,14 @@ toast.configure();
 let Addon = () => {
     const dispatch = useDispatch();
 
-    // const user = userSelector((state)=>state.user.user[0])
+    const user = useSelector((state)=>state.user.user[0])
 
   const [form,setForm]=useState({
     title_rcp:null,
-    img_rcp:null,
+    img_rcp:[],
     ingredients_rcp:null,
-    video_rcp:null,
-    files:[],
+    files:null,
+    fileUpload:[],
   })
 
   const hiddenFileInput = React.useRef(null);
@@ -34,6 +34,7 @@ let Addon = () => {
   }
 
 
+  console.log(setForm.files)
   return (
     <div style={{ marginBottom: "20rem" }}>
       <Container
@@ -57,10 +58,16 @@ let Addon = () => {
           onChange={(e)=>setForm({...form,ingredients_rcp:e.target.value})}
         ></textarea>
       </div>
-      <Container fluid className={`${css.ContainerTwo}`}>
-        <button className={css.UploadBtn}>Video</button>
+      <Container fluid className={`${css.ContainerTwo}`} >
+        <button className={css.UploadBtn} onClick={handleClickUpload}>Video</button>
+        <input type="file" multiple className="form-control form-control-sm" 
+            ref={hiddenFileInput} style={{display:'none'}} id="colFormLabel"
+            onChange={(e)=>setForm({...form,files:e.target.files})}
+          />
       </Container>
+      <div className="d-flex justify-content-center">
         <button className={`${css.PostBtn} mt-5`} onClick={handleSubmit}>Post</button>
+        </div>
     </div>
   );
 };
