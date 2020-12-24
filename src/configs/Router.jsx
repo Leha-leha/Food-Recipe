@@ -13,6 +13,7 @@ import Code from "../pages/auth/codeReset";
 import Reset from "../pages/auth/Reset";
 import Chat from "../pages/chat/Chat";
 import addRecipe from "../pages/recipes/addRecipe";
+import DetailRecipe from "../pages/recipes/DetailRecipe"
 
 import PrivateRoute from "../components/PrivateRoute";
 
@@ -29,6 +30,7 @@ const Router = () => {
         <PrivateRoute path="/profile" component={Profile} />
         <Route path="/chat" component={Chat} />
         <Route path="/addRecipe" component={addRecipe} />
+        <Route path="/detail/:id" component={DetailRecipe} />
       </BrowserRouter>
     </Provider>
   );
