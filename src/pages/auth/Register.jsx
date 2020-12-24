@@ -2,38 +2,75 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux"
 import "./index.css";
 import Mama from "../../assets/Group 697.png";
 import Background from "../../assets/76c7e3577554580136d5f65222046a21.png";
-import axios from "axios";
+// import axios from "axios";
+import { postRegister } from '../../redux/actionCreators/auth'
 
-export default class Register extends Component {
-  handleSubmit = (e) => {
-    const data = {
-      user_name: this.name_user,
-      email: this.email_user,
-      phone_num: this.phone_user,
-      password: this.password_user,
-    };
-    axios
-      .post("http://localhost:5000/auth/signup", data)
-      .then((res) => {
-        console.log(res);
+
+class Register extends Component {
+  state = {
+    error: '',
+    user: {
+      name_user: '',
+      email_user: '',
+      phone_user: '',
+      password_user: '',
+      confirm_password_user: '',
+    }
+  }
+
+  userHandler = (e) => {
+    const value = e.target.value
+    this.setState({
+      user: {
+        ...this.state.user,
+
+        [e.target.name]: value
+      }
+    })
+  }
+
+  handleSubmit = async (e) => {
+    e.preventDefault()
+    const verify = [this.state.user.name_user, this.state.user.email_user, this.state.user.phone_user, this.state.user.password_user, this.state.user.confirm_password_user]
+
+    console.log(this.state)
+    if (verify.includes('')) {
+      this.setState({
+        error: 'Please fill the form'
       })
-      .catch((err) => {
-        console.log(err);
-      });
+    } else if (this.state.user.password_user !== this.state.user.confirm_password_user) {
+      this.setState({
+        error: 'Password is incorrect'
+      })
+    } else {
+      const data = {
+        name_user: this.state.user.name_user,
+        email_user: this.state.user.email_user,
+        phone_user: this.state.user.phone_user,
+        password_user: this.state.user.password_user,
+      };
 
-    this.props.history.push("/login");
+      await this.props.dispatch(postRegister(data))
 
-    console.log(data);
+      const { auth } = this.props
+      
+      if ( auth.data.msg ) {
+        this.setState({
+          error: auth.data.msg
+        })
+      } else {
+        this.setState({
+          error: ''
+        })
+        this.props.history.push("/login");
+      }
+    }
   };
-  // validate(){
-  //   let isValid = true;
-  //   if(this.confirm_password_user != this.password_user){
-  //     isValid = false
-  //   }
-  // }
+
   render() {
     return (
       <div className="container-fluid h-100">
@@ -62,14 +99,15 @@ export default class Register extends Component {
                 Create new account to access all features
               </span>
               <Form className="w-100 mb-3 mt-3" onSubmit={this.handleSubmit}>
-                <Form.Group controlId="formBasicEmail">
+                <Form.Group controlId="formBasicName">
                   <Form.Label>Name</Form.Label>
                   <Form.Control
                     type="text"
+                    name="name_user"
                     placeholder="Name"
+                    value={this.state.user.name_user}
                     className="pt-4 pb-4 pl-4 pr-0 input"
-                    required
-                    onChange={(e) => (this.user_name = e.target.value)}
+                    onChange={this.userHandler}
                   />
                 </Form.Group>
 
@@ -77,43 +115,48 @@ export default class Register extends Component {
                   <Form.Label>Email address*</Form.Label>
                   <Form.Control
                     type="email"
+                    name="email_user"
                     placeholder="Enter email address"
+                    value={this.state.user.email_user}
                     className="pt-4 pb-4 pl-4 pr-0 input"
-                    required
-                    onChange={(e) => (this.email_user = e.target.value)}
+                    onChange={this.userHandler}
                   />
                 </Form.Group>
                 <Form.Group controlId="formBasicNumber">
                   <Form.Label>Phone Number</Form.Label>
                   <Form.Control
                     type="number"
+                    name="phone_user"
                     placeholder="08xxxxxxxxxx"
+                    value={this.state.user.phone_user}
                     className="pt-4 pb-4 pl-4 pr-0 input"
-                    required
-                    onChange={(e) => (this.phone_user = e.target.value)}
+                    onChange={this.userHandler}
                   />
                 </Form.Group>
                 <Form.Group controlId="formBasicPassword">
                   <Form.Label>Create New Password</Form.Label>
                   <Form.Control
                     type="password"
+                    name="password_user"
                     placeholder="Create New Password"
+                    value={this.state.user.password_user}
                     className="pt-4 pb-4 pl-4 pr-0 input"
-                    required
-                    onChange={(e) => (this.password_user = e.target.value)}
+                    onChange={this.userHandler}
                   />
                 </Form.Group>
                 <Form.Group controlId="formBasicConfirmPassword">
                   <Form.Label>New Password</Form.Label>
                   <Form.Control
                     type="password"
+                    name="confirm_password_user"
                     placeholder="New Password"
+                    value={this.state.user.confirm_password_user}
                     className="pt-4 pb-4 pl-4 pr-0 input"
-                    required
-                    onChange={(e) =>
-                      (this.confirm_password_user = e.target.value)
-                    }
+                    onChange={this.userHandler}
                   />
+                </Form.Group>
+                <Form.Group controlId="errors">
+                  <span className="text-danger mb-2" style={{ fontFamily: 'Airbnb Cereal App Light' }}>{this.state.error}</span>
                 </Form.Group>
                 <Form.Group controlId="formBasicCheckbox">
                   <Form.Check
@@ -147,3 +190,11 @@ export default class Register extends Component {
     );
   }
 }
+
+const mapsStateToProps = ({ auth }) => {
+  return {
+    auth
+  }
+}
+
+export default connect(mapsStateToProps)(Register)

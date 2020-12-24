@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { withRouter, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import css from "./Navbar.module.css";
 
@@ -65,7 +65,7 @@ class Navbar extends React.Component {
                   </Link>
                 </li>
               </ul>
-              {auth.isLogin ? (
+              {auth.isFulfilled ? (
                 <ul
                   className={`navbar-nav mb-2 mt-4 ms-auto mb-lg-0 ${css.Auth}`}
                 >
@@ -87,17 +87,12 @@ class Navbar extends React.Component {
                 >
                   <li
                     className="nav-item"
-                    onClick={() => this.props.history.push("/login")}
+                    // onClick={() => this.props.history.push("/login")}
                   >
-                    <a
-                      className="nav-link"
-                      href="/login"
-                      tabindex="-1"
-                      aria-disabled="true"
-                    >
+                    <Link to={{ pathname: "/login" }} className="nav-link">
                       <i className="fas fa-user-circle me-2"></i>
                       Login
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               )}
