@@ -87,17 +87,14 @@ class Navbar extends React.Component {
                 >
                   <li
                     className="nav-item"
-                    onClick={() => this.props.history.push("/login")}
+                    // onClick={() => this.props.history.push("/login")}
                   >
-                    <a
+                    <Link to={{ pathname: '/login' }}
                       className="nav-link"
-                      href="/login"
-                      tabindex="-1"
-                      aria-disabled="true"
                     >
                       <i className="fas fa-user-circle me-2"></i>
                       Login
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               )}
