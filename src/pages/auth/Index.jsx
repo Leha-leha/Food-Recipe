@@ -24,7 +24,8 @@ class Index extends Component {
     axios
       .post("http://localhost:5000/auth/login", data)
       .then((res) => {
-        localStorage.setItem("token", res.data.data);
+        localStorage.setItem("token", res.data.data.token);
+        localStorage.setItem("userId", res.data.data.userId);
         //res.headers["x-access-token"] = res.data.data;
         dispatch({ type: "Login" });
         console.log(auth.isLogin);

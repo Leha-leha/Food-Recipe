@@ -20,6 +20,7 @@ class Navbar extends React.Component {
         console.log(res);
         dispatch({ type: "Logout" });
         localStorage.setItem("token", "");
+        localStorage.setItem("userId", "");
       })
       .catch((err) => {
         console.log(err);
