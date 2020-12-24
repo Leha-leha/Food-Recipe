@@ -8,8 +8,6 @@ import Mama from "../../assets/Group 697.png";
 import Background from "../../assets/76c7e3577554580136d5f65222046a21.png";
 import { Redirect } from "react-router-dom";
 
-import Navbar from "../../components/Navbar/Navbar";
-
 import { connect } from "react-redux";
 
 class Index extends Component {
