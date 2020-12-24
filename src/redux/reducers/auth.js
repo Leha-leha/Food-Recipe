@@ -1,4 +1,10 @@
-import { LoginString, RegisterString, pending, rejected, fulfilled } from '../actionString'
+import {
+  LoginString,
+  RegisterString,
+  pending,
+  rejected,
+  fulfilled,
+} from "../actionString";
 
 const initialState = {
   data: {},
@@ -6,7 +12,7 @@ const initialState = {
   isRejected: false,
   isFulfilled: false,
   err: {},
-}
+};
 
 const authReducer = (prevState = initialState, action) => {
   switch (action.type) {
@@ -22,14 +28,14 @@ const authReducer = (prevState = initialState, action) => {
         ...prevState,
         isPending: false,
         isRejected: true,
-        err: action.payload.data
+        err: action.payload.data,
       };
     case LoginString + fulfilled:
       return {
         ...prevState,
         isPending: false,
         isFulfilled: true,
-        data: action.payload.data
+        data: action.payload.data,
       };
     case RegisterString + pending:
       return {
@@ -43,21 +49,20 @@ const authReducer = (prevState = initialState, action) => {
         ...prevState,
         isPending: false,
         isRejected: true,
-        err: action.payload.data
+        err: action.payload.data,
       };
     case RegisterString + fulfilled:
       return {
         ...prevState,
         isPending: false,
         isFulfilled: true,
-        data: action.payload.data
+        data: action.payload.data,
       };
-
 
     case "Logout":
       return {
         ...prevState,
-        isLogin: false,
+        isFulfilled: false,
       };
     default:
       return {
