@@ -46,7 +46,7 @@ class Index extends Component {
         email_user: this.state.user.email,
         password_user: this.state.user.password,
       };
-  
+      // console.log(data)
       await dispatch(postLogin(data))
   
       const { auth } = this.props
