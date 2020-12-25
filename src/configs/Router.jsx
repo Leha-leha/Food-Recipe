@@ -25,7 +25,6 @@ const Router = () => {
       <BrowserRouter>
         <Switch>
           <Route exact path='/' component={Homepage} />
-          <Route path='*' component={NotFound} />
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
           <Route path='/forgot' component={Forgot} />
@@ -36,6 +35,7 @@ const Router = () => {
           <PrivateRoute path='/addRecipe' component={addRecipe} />
           <Route exact path='/detail/:id' component={DetailRecipe} />
           <Route exact path='/detail/:id/:video' component={DetailVideo} />
+          <Route path='*' component={NotFound} />
         </Switch>
       </BrowserRouter>
     </Provider>
