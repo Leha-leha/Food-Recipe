@@ -25,12 +25,6 @@ class Navbar extends React.Component {
 
       this.setNavbar()
 
-      // e.dispatchEvent()
-
-      console.log(this.props)
-      console.log(this.state)
-
-
       this.props.history.push('/')
     }
   };
