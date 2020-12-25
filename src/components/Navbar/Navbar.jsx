@@ -24,7 +24,6 @@ class Navbar extends React.Component {
       localStorage.removeItem('userId')
 
       this.setNavbar()
-
       this.props.history.push('/')
     }
   };
@@ -50,7 +49,6 @@ class Navbar extends React.Component {
         <ul className={`navbar-nav mb-2 mt-4 ms-auto mb-lg-0 ` + css.Auth} >
           <li
             className="nav-item"
-            // onClick={() => this.props.history.push("/login")}
           >
             <Link to={{ pathname: "/login" }} className="nav-link">
               <i className="fas fa-user-circle me-2"></i>
@@ -78,7 +76,6 @@ class Navbar extends React.Component {
   }
 
   render() {
-    
     return (
       <>
         {/* NAVBAR */}
