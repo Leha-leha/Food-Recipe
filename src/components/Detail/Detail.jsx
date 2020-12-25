@@ -1,21 +1,66 @@
 import React, { Component } from 'react'
 import { Container } from 'react-bootstrap'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import detail from './Detail.module.css'
-import Image from '../../assets/4da51338c06dd21688b82eae3bc9dfa6.jpg'
+import { getSingleRecipe } from '../../redux/actionCreators/Recipes'
+// import Image from '../../assets/4da51338c06dd21688b82eae3bc9dfa6.jpg'
+// import Loading from '../../assets/gifs/spinner.gif'
 import LikedIcon from '../../assets/icons/like.png'
 import SavedIcon from '../../assets/icons/saved.png'
 import PlayIcon from '../../assets/icons/play.png'
 import PhotoUser from '../../assets/photo-comment.png'
 
 class Detail extends Component {
+	state = {
+		recipe: {},
+		imgRecipe: '',
+		videoRecipe: []
+	}
+
+	getRecipeById = async () => {
+		const { id } = this.props.match.params
+
+		await this.props.dispatch(getSingleRecipe(id))
+		
+		const { recipes } = this.props
+		if ( recipes.singleRecipe.msg ) {
+			this.props.history.push('/detail')
+		} else {
+			this.setState({
+				recipe: recipes.singleRecipe.data[0]
+			})
+			const image = JSON.parse(this.state.recipe.img_rcp)[0]
+			this.setState({
+				imgRecipe: image
+			})
+			const video = JSON.parse(this.state.recipe.video_rcp)
+			this.setState({
+				videoRecipe: video
+			})
+		}
+		console.log(this.state)
+	}
+
+	componentDidMount = () => {
+		this.getRecipeById()
+	}
+
 	render () {
+		const { isPending } = this.props.recipes
+
 		return (
 			<Container>
+				{/* animasi loading */}
+				{/* { isPending && <div className={ detail.Loading }>
+					<img src={Loading} alt=""/>
+				</div> } */}
+				{/* comment aja klo ga mau dipake, blom fix juga soalnya */}
 				<div className="text-center">
-					<h1 className={ 'mx-auto ' + detail.Title }>Loream Sandwich</h1>
+					<h1 className={ 'mx-auto ' + detail.Title }>{ isPending ? 'Loading...' : this.state.recipe.title_rcp }</h1>
 				</div>
-				<div className={ 'mx-auto ' + detail.ImageSize } style={{ backgroundImage: `url(${Image})` }} >
+				<div className={ 'mx-auto ' + detail.ImageSize } style={{ backgroundImage: `url(${ !isPending && this.state.imgRecipe })` }} >
 					<div className={ detail.ButtonList }>
 						<div className={ detail.SavedButton }>
 							<img src={ SavedIcon } alt=""/>
@@ -29,33 +74,20 @@ class Detail extends Component {
 					<h2 className={ detail.TextDesc }>Ingredients</h2>
 					<div className={ detail.StepList }>
 						<span style={{ whiteSpace: 'pre-line' }}>
-							- 2 eggs <br/>
-							- 2 tbsp mayonnaise <br/>
-							- 3 slices bread <br/>
-							- a little butter <br/>
-							- ⅓ carton of cress <br/>
-							- 2-3 slices of tomato or a lettuce leaf <br/>
-							and a slice of ham or cheese
-							- crisps , to serve <br/>
+							{ !isPending && this.state.recipe.ingridients_rcp }
 						</span>
+						<br/>
+						<span>{ !isPending && this.state.recipe.desc_rcp }</span>
 					</div>
 					<h2 className={ detail.TextVideo }>Video Step</h2>
 					<div className={ detail.VideoList }>
-						<div className={ detail.VideoItem }>
-							<img src={ PlayIcon } alt="Play" />
-						</div>
-						<div className={ detail.VideoItem }>
-							<img src={ PlayIcon } alt="Play" />
-						</div>
-						<div className={ detail.VideoItem }>
-							<img src={ PlayIcon } alt="Play" />
-						</div>
-						<div className={ detail.VideoItem }>
-							<img src={ PlayIcon } alt="Play" />
-						</div>
-						<div className={ detail.VideoItem }>
-							<img src={ PlayIcon } alt="Play" />
-						</div>
+						{ !isPending && this.state.videoRecipe.map((_, index) => {
+							return (
+								<div key={index} className={ detail.VideoItem }>
+									<img src={ PlayIcon } alt="Play" />
+								</div>
+							)
+						}) }
 					</div>
 					<div className={ 'text-center ' + detail.CommentSection }>
 						<textarea name="comment" id="" className={ detail.CommentForm } placeholder="Comment"></textarea>
@@ -86,4 +118,10 @@ class Detail extends Component {
 	}
 }
 
-export default Detail
+const mapsStateToProps = ({ recipes }) => {
+	return {
+		recipes
+	}
+}
+
+export default connect(mapsStateToProps)(withRouter(Detail))

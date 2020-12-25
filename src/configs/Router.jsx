@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import store from "../redux/store";
@@ -13,8 +13,9 @@ import Code from "../pages/auth/codeReset";
 import Reset from "../pages/auth/Reset";
 import Chat from "../pages/chat/Chat";
 import addRecipe from "../pages/recipes/addRecipe";
-import DetailRecipe from "../pages/recipes/DetailRecipe"
-import DetailVideo from "../pages/recipes/DetailVideo"
+import DetailRecipe from "../pages/recipes/DetailRecipe";
+import DetailVideo from "../pages/recipes/DetailVideo";
+import NotFound from "../pages/NotFound/NotFound";
 
 import PrivateRoute from "../components/PrivateRoute";
 
@@ -22,17 +23,20 @@ const Router = () => {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <Route exact path="/" component={Homepage} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <Route path="/forgot" component={Forgot} />
-        <Route path="/code" component={Code} />
-        <Route path="/reset" component={Reset} />
-        <PrivateRoute path="/profile" component={Profile} />
-        <Route path="/chat" component={Chat} />
-        <Route path="/addRecipe" component={addRecipe} />
-        <Route exact path="/detail/:id" component={DetailRecipe} />
-        <Route exact path="/detail/:id/:video" component={DetailVideo} />
+        <Switch>
+          <Route exact path='/' component={Homepage} />
+          <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} />
+          <Route path='/forgot' component={Forgot} />
+          <Route path='/code' component={Code} />
+          <Route path='/reset' component={Reset} />
+          <PrivateRoute path='/profile' component={Profile} />
+          <Route path='/chat' component={Chat} />
+          <PrivateRoute path='/addRecipe' component={addRecipe} />
+          <Route exact path='/detail/:id' component={DetailRecipe} />
+          <Route exact path='/detail/:id/:video' component={DetailVideo} />
+          <Route path='*' component={NotFound} />
+        </Switch>
       </BrowserRouter>
     </Provider>
   );

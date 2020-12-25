@@ -4,7 +4,7 @@ import { uploadRecipe } from './actionType';
 
 
 
-const getUrl = "http://localhost:5000"
+const getUrl = process.env.REACT_APP_URL
 export const getRecipeCreator = () => {
     
     const headers = {};
@@ -17,7 +17,7 @@ export const getRecipeCreator = () => {
 export const getSingleRecipe = (id) => {
     return {
         type: "GET_SINGLE_RECIPE",
-        payload: axios.get(getUrl + "/recipe" + id),
+        payload: axios.get(getUrl + "/recipe/" + id),
     }
 }
 

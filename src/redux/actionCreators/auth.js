@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { LoginString, RegisterString } from '../actionString'
+import { LoginString, RegisterString, LogoutString } from '../actionString'
 
 const url = process.env.REACT_APP_URL
 
@@ -18,14 +18,13 @@ export const postRegister = (data) => {
   }
 }
 
-// export const setLoginTrue = () => {
-//   return {
-//     type: "Login",
-//   };
-// };
-
-// export const setLoginFalse = () => {
-//   return {
-//     type: "Logout",
-//   };
-// };
+export const deleteLogout = (token) => {
+  return {
+    type: LogoutString,
+    payload: axios.delete(url + '/auth/logout', {
+      headers: {
+        "x-access-token": "Bearer " + token,
+      }
+    })
+  }
+}

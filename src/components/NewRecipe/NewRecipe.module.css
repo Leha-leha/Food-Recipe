@@ -19,11 +19,13 @@ main#Main {
 
 .HeroImage img {
   width: 400px;
+  height: 390px;
 }
 
 .HeroText {
   float: right;
   margin-top: 90px;
+  width: 40%;
 }
 
 .HeroText h2 {

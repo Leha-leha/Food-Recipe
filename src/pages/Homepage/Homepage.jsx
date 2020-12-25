@@ -3,7 +3,6 @@ import Header from "../../components/Header/Header";
 import Popular from "../../components/Popular/Popular";
 import NewRecipe from "../../components/NewRecipe/NewRecipe";
 import PopularRecipe from "../../components/PopularRecipe/PopularRecipe";
-// import Footer from "../../components/Footer/Footer";
 
 function Homepage() {
   return(
@@ -12,7 +11,6 @@ function Homepage() {
       <Popular />
       <NewRecipe />
       <PopularRecipe />
-      {/* <Footer /> */}
     </>
   )
 }
