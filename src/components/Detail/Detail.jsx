@@ -87,6 +87,9 @@ class Detail extends Component {
       .catch((err) => {
         console.log(err);
       });
+    this.setState({
+      addComment: "",
+    });
     this.getCommentByRecipe();
   };
 
@@ -156,6 +159,7 @@ class Detail extends Component {
             <textarea
               name="comment"
               id=""
+              value={this.state.addComment}
               className={detail.CommentForm}
               onChange={this.handlerChange}
               placeholder="Comment"
