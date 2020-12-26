@@ -4,13 +4,10 @@ import axios from "axios";
 import ListRecipe from "../ListRecipe/ListRecipe";
 
 import css from "./PopularRecipe.module.css";
-import ChickenKare from "../../assets/images/kare-chicken.png";
 
 class PopularRecipe extends React.Component {
   state = {
     PopularRecipes: {},
-    // PopularRecipesTitle: {},
-    // PopularRecipesImg: {},
   };
 
   getPopularRecipes = () => {
@@ -30,7 +27,6 @@ class PopularRecipe extends React.Component {
 
   render() {
     const { PopularRecipes } = this.state;
-    // console.log(PopularRecipes);
     return (
       <main id={css.Main}>
         <div style={{ float: "none" }}></div>
@@ -39,11 +35,18 @@ class PopularRecipe extends React.Component {
             <h2>Popular Recipe</h2>
           </div>
           <div className={`${css.Wrapper}`}>
-            {PopularRecipes.data && PopularRecipes.data.map(({title_rcp, img_rcp, id_rcp}) => {
-              return (
-                <ListRecipe idUrl={id_rcp} img={JSON.parse(img_rcp)[0]} title={title_rcp} />
-              );
-            })}
+            {PopularRecipes.data &&
+              PopularRecipes.data
+                .filter((item, index) => index < 6) // limit the recipes
+                .map(({ title_rcp, img_rcp, id_rcp }) => {
+                  return (
+                    <ListRecipe
+                      idUrl={id_rcp}
+                      img={JSON.parse(img_rcp)[0]}
+                      title={title_rcp}
+                    />
+                  );
+                })}
           </div>
         </div>
         <footer>
