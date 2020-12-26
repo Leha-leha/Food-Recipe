@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Container } from 'react-bootstrap'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import detail from './Detail.module.css'
@@ -16,17 +16,20 @@ class Detail extends Component {
 	state = {
 		recipe: {},
 		imgRecipe: '',
-		videoRecipe: []
+		videoRecipe: [],
+		idRecipe: 0
 	}
 
 	getRecipeById = async () => {
 		const { id } = this.props.match.params
-
+		this.setState({
+			idRecipe: id
+		})
 		await this.props.dispatch(getSingleRecipe(id))
 		
 		const { recipes } = this.props
 		if ( recipes.singleRecipe.msg ) {
-			this.props.history.push('/detail')
+			this.props.history.push('/recipe')
 		} else {
 			this.setState({
 				recipe: recipes.singleRecipe.data[0]
@@ -40,7 +43,7 @@ class Detail extends Component {
 				videoRecipe: video
 			})
 		}
-		console.log(this.state)
+		// console.log(this.state)
 	}
 
 	componentDidMount = () => {
@@ -82,10 +85,13 @@ class Detail extends Component {
 					<h2 className={ detail.TextVideo }>Video Step</h2>
 					<div className={ detail.VideoList }>
 						{ !isPending && this.state.videoRecipe.map((_, index) => {
+							index++
 							return (
-								<div key={index} className={ detail.VideoItem }>
-									<img src={ PlayIcon } alt="Play" />
-								</div>
+								<Link key={index} to={{ pathname: `/recipe/${this.state.idRecipe}/${index}` }}>
+									<div className={ detail.VideoItem }>
+										<img src={ PlayIcon } alt="Play" />
+									</div>
+								</Link>
 							)
 						}) }
 					</div>
