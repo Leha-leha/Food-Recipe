@@ -11,7 +11,8 @@ export default class popularRecipe extends Component {
 
             <ul className="gallery">
                 <li>
-                    <img className="feed-food" src="https://res.cloudinary.com/zada/image/upload/v1608472385/img-title_hsr2uf.png" alt="" />
+                    <input type="hidden" name="id_rcp" value={id_rcp}  />
+                    <img className="feed-food" src={img_rcp} alt="" />
                 <div className="text-block">
                     <h4>
                        {title_rcp} 

@@ -6,7 +6,7 @@ import css from "./Header.module.css";
 import SearchIcon from "../../assets/icons/Search.svg";
 // import axios from "axios";
 
-const baseUrl = process.env.NODE_APP_URL
+const baseUrl = process.env.REACT_APP_URL
 console.log(baseUrl);
 class Header extends React.Component {
   state = {
@@ -23,7 +23,7 @@ class Header extends React.Component {
     }
   }
   render() {
-    const { title } = this.state
+    const { title_rcp } = this.state
     console.log(this.state);
     return (
       <header>
@@ -37,7 +37,7 @@ class Header extends React.Component {
             <br />& Delicious Food
           </h1>
           <div className={`${css.SearchArea} input-group`} 
-          value={title}
+          value={title_rcp}
           onChange ={this.changeHandler} onKeyPress={this.handleKeyPress}>
             <div className={css.SearchBar}>
               <img src={SearchIcon} className={css.SearchIcon} alt='search' />

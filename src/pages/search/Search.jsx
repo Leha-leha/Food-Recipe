@@ -4,7 +4,7 @@ import SearchItems from '../../components/searchItems';
 import { Container } from "react-bootstrap";
 import axios from 'axios'
 
-const base_url = "http://localhost:5000/search?"
+const base_url = process.env.REACT_APP_URL + "/search?"
 console.log(base_url)
 const urlParams = new URLSearchParams(window.location.search)
 
