@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Modal, Button } from "react-bootstrap";
+import { Container, Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
 
 import profile from "./Profile.module.css";
@@ -14,10 +14,12 @@ class Profile extends Component {
     likedrecipe: [],
     savedrecipe: [],
     showModal: false,
+    showModalPass: false,
     file: null,
+    newPassword: "",
   };
 
-  //Modal
+  //Modal Photo
   handleClose = () =>
     this.setState({
       showModal: false,
@@ -25,6 +27,15 @@ class Profile extends Component {
   handleShow = () =>
     this.setState({
       showModal: true,
+    });
+  //Modal Pass
+  handleClosePass = () =>
+    this.setState({
+      showModalPass: false,
+    });
+  handleShowPass = () =>
+    this.setState({
+      showModalPass: true,
     });
 
   myListActive = (e) => {
@@ -132,6 +143,32 @@ class Profile extends Component {
     console.log("change photo");
   };
 
+  changePass = async () => {
+    const data = {
+      password_user: this.state.newPassword,
+    };
+    console.log(data);
+    const userid = await localStorage.getItem("userId");
+    await axios
+      .patch(`http://localhost:5000/newpass/${userid}`, data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.setState({
+      showModalPass: false,
+    });
+  };
+
+  passHandler = (e) => {
+    const value = e.target.value;
+    this.setState({
+      [e.target.name]: value,
+    });
+  };
+
   componentDidMount = () => {
     console.log("did mount");
     this.getUser();
@@ -142,7 +179,6 @@ class Profile extends Component {
 
   render() {
     console.log(this.state.file);
-    console.log(this.state.profileData);
     const { myrecipe, likedrecipe, savedrecipe, profileData } = this.state;
     // console.log(myrecipe);
     console.log("RE RENDER HERE");
@@ -191,7 +227,10 @@ class Profile extends Component {
             >
               Change Photo Profile
             </button>
-            <button className={profile.DefaultBtn + " d-block"}>
+            <button
+              className={profile.DefaultBtn + " d-block"}
+              onClick={this.handleShowPass}
+            >
               Change Password
             </button>
           </div>
@@ -278,10 +317,10 @@ class Profile extends Component {
             </div>
           </div>
         </Container>
-        {/* Modal */}
+        {/* Modal Change Photo */}
         <Modal show={this.state.showModal} onHide={this.handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>Change Photo Profile</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <input
@@ -299,6 +338,30 @@ class Profile extends Component {
             </Button>
             <Button variant="primary" onClick={this.changePhoto}>
               Change Photo Profile
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        {/* Modal Change Password */}
+        <Modal show={this.state.showModalPass} onHide={this.handleClosePass}>
+          <Modal.Header closeButton>
+            <Modal.Title>Change Password</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Label>New Password</Form.Label>
+            <Form.Control
+              type="password"
+              name="newPassword"
+              placeholder="Password"
+              onChange={this.passHandler}
+            />
+            {/* <img src={this.state.file} alt="pict profile" /> */}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClosePass}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={this.changePass}>
+              Submit
             </Button>
           </Modal.Footer>
         </Modal>

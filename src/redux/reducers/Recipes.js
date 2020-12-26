@@ -3,7 +3,7 @@ const initialState = {
     err: {},
     singleRecipe: {},
     isPending: false ,
-    isFullfilled: false,
+    isFulfilled: false,
     isRejected: false,
 }
 
@@ -14,7 +14,7 @@ const recipeReducer = (prevState = initialState , action) => {
                 ...prevState,
                 isPending: true,
                 isRejected: false,
-                isFullfilled: false,
+                isFulfilled: false,
             }
 		case "GET_ALL_RECIPES_REJECTED":
 			return{
@@ -27,7 +27,7 @@ const recipeReducer = (prevState = initialState , action) => {
 			return{
 				...prevState,
 				isPending: false,
-				isFUllfiled: true,
+				isFulfilled: true,
 				recipesData: action.payload.data,
 			};
 		case "GET_SINGLE_RECIPE_PENDING":
@@ -35,7 +35,7 @@ const recipeReducer = (prevState = initialState , action) => {
 				...prevState,
 				isPending: true,
 				isRejected: false,
-				isFullfilled: false,
+				isFulfilled: false,
 			};
 		case "GET_SINGLE_RECIPE_REJECTED":
 			return{
@@ -48,7 +48,7 @@ const recipeReducer = (prevState = initialState , action) => {
 			return{
 				...prevState,
 				isPending: false,
-				isFullfiled: true,
+				isFulfilled: true,
 				singleRecipe: action.payload.data,
 			};
 		default:

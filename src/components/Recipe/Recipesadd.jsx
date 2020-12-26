@@ -1,19 +1,10 @@
 import React, { Component } from "react";
 import { Jumbotron, Form, Button } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
 
-import { uploadRecipeCreator } from "../../redux/actionCreators/Recipes";
-import squareImg from "../../assets/icons/imageupload.png";
+// import { uploadRecipeCreator } from "../../redux/actionCreators/Recipes";
+// import squareImg from "../../assets/icons/imageupload.png";
 import axios from "axios";
-const getUrl = 'http://localhost:5000/recipes'
-
-const FormData = require('form-data')
-// const qs = require('querystring')
-const config = {
-    headers: {
-        'Content-Type': 'multipart/form-data'
-    },
-}
 
 
 class Recipesadd extends Component {
@@ -32,14 +23,24 @@ class Recipesadd extends Component {
     }
 
     handleFile = (e) => {
-        let img_rcp = e.target.files
-        // file: URL.createObjectURL(event.target.files[0]),
-        this.setState({img_rcp: img_rcp, file: URL.createObjectURL(e.target.files[0])})
-        let video_rcp = e.target.files
-        this.setState({video_rcp: video_rcp})
+        if ( e.target.name === 'img' ) {
+            console.log('image')
+            let img_rcp = e.target.files
+            // file: URL.createObjectURL(event.target.files[0]),
+            this.setState({
+                img_rcp: img_rcp,
+                file: URL.createObjectURL(e.target.files[0])
+            })
+        } else {
+            console.log('videos')
+
+            let video_rcp = e.target.files
+            this.setState({video_rcp: video_rcp})
+        }
     }
 
     submitHandler = e => {
+        e.preventDefault()
         let params = {
             title_rcp: this.state.title_rcp,
             ingridients_rcp: this.state.ingridients_rcp,
@@ -48,15 +49,36 @@ class Recipesadd extends Component {
             videos: this.state.video_rcp,
         }
 
+        console.log(this.state)
+
         let formdata = new FormData()
+        formdata.append('id_user', 19)
         formdata.append('title_rcp', params.title_rcp)
         formdata.append('ingridients_rcp', params.ingridients_rcp)
         formdata.append('desc_rcp', params.desc_rcp)
-        formdata.append("img", params.img);
-            // console.log(params.img_rcp[i])
-        formdata.append("videos", params.videos);
+        for ( let i = 0; i < params.img.length; i++ ) {
+            // formdata.append("img", params.img);
+            formdata.append("img", params.img[i]);
 
-        e.preventDefault()
+            // formdata.append()
+        }
+            // console.log(params.img_rcp[i])
+        for ( let j = 0; j < params.videos.length; j++ ) {
+
+            formdata.append("videos", params.videos[j]);
+        }
+
+        const getUrl = 'http://localhost:5000/recipes'
+
+        // const FormData = require('form-data')
+        // const qs = require('querystring')
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            },
+        }
+
+        
         axios.post(getUrl, formdata, config)
         .then(res => {
             console.log(res)
@@ -96,7 +118,7 @@ class Recipesadd extends Component {
                         <div className="row">
                             <div className="col-md-8 row">
                                 <input type="file" name='img' onChange={(e)=>this.handleFile(e)} autoComplete='off' placeholder="Add" multiple />
-                                <img src={this.state.file} />
+                                <img src={this.state.file} alt="lah" />
                             </div>
                         </div>
                     </Jumbotron>
