@@ -45,7 +45,7 @@ input.Search {
   height: 60px !important;
   padding-left: 20px !important;
   padding-right: 40px !important;
-  background-color: #EFEFEF;
+  background-color: #efefef;
   border: 1px solid #8e8e93 !important;
   border-radius: 23px !important;
   font-size: 16px !important;
@@ -62,7 +62,6 @@ input.Search {
   right: 20px;
   cursor: pointer;
 }
-
 
 /* SMALL DEVICES 0 - 480PX */
 @media only screen and (max-width: 600px) {

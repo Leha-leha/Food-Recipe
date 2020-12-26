@@ -15,7 +15,7 @@ import Chat from "../pages/chat/Chat";
 import addRecipe from "../pages/recipes/addRecipe";
 import DetailRecipe from "../pages/recipes/DetailRecipe"
 import DetailVideo from "../pages/recipes/DetailVideo"
-
+import SearchPage from "../pages/search/Search"
 import PrivateRoute from "../components/PrivateRoute";
 
 const Router = () => {
@@ -28,6 +28,7 @@ const Router = () => {
         <Route path="/forgot" component={Forgot} />
         <Route path="/code" component={Code} />
         <Route path="/reset" component={Reset} />
+        <Route path="search" component={SearchPage} />
         <PrivateRoute path="/profile" component={Profile} />
         <Route path="/chat" component={Chat} />
         <Route path="/addRecipe" component={addRecipe} />
