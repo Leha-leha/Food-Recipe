@@ -17,12 +17,8 @@ class PopularRecipe extends React.Component {
     axios
       .get(`${process.env.REACT_APP_URL}/recipes`)
       .then(({ data }) => {
-        console.log(data.data.map((e) => e.title_rcp));
-        console.log(data.data.map((e) => JSON.parse(e.img_rcp)[0]));
         this.setState({
           PopularRecipes: data
-          // PopularRecipes: data.data.map((e) => e.title_rcp),
-          // PopularRecipesImg: data.data.map((e) => JSON.parse(e.img_rcp)[0]),
         });
       })
       .catch((err) => console.log(err));
@@ -43,10 +39,9 @@ class PopularRecipe extends React.Component {
             <h2>Popular Recipe</h2>
           </div>
           <div className={`${css.Wrapper}`}>
-            {PopularRecipes.data && PopularRecipes.data.map(({title_rcp, img_rcp}) => {
-              console.log(JSON.parse(img_rcp)[0])
+            {PopularRecipes.data && PopularRecipes.data.map(({title_rcp, img_rcp, id_rcp}) => {
               return (
-                <ListRecipe img={JSON.parse(img_rcp)[0]} title={title_rcp} />
+                <ListRecipe idUrl={id_rcp} img={JSON.parse(img_rcp)[0]} title={title_rcp} />
               );
             })}
           </div>
