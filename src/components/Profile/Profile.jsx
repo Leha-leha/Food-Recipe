@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
 
 import profile from "./Profile.module.css";
@@ -9,11 +9,34 @@ import EditProfileBtn from "../../assets/icons/edit-image.png";
 class Profile extends Component {
   state = {
     showEdit: false,
-    profile: {},
+    profileData: [],
     myrecipe: [],
     likedrecipe: [],
     savedrecipe: [],
+    showModal: false,
+    showModalPass: false,
+    file: null,
+    newPassword: "",
   };
+
+  //Modal Photo
+  handleClose = () =>
+    this.setState({
+      showModal: false,
+    });
+  handleShow = () =>
+    this.setState({
+      showModal: true,
+    });
+  //Modal Pass
+  handleClosePass = () =>
+    this.setState({
+      showModalPass: false,
+    });
+  handleShowPass = () =>
+    this.setState({
+      showModalPass: true,
+    });
 
   myListActive = (e) => {
     const ListId = e.target.dataset.id;
@@ -48,9 +71,9 @@ class Profile extends Component {
     axios
       .get(`http://localhost:5000/user/${userid}`)
       .then((res) => {
-        const profile = res.data.data[0];
+        const profile = res.data.data;
         this.setState({
-          profile: profile,
+          profileData: profile,
         });
         //console.log(res.data.data[0]);
       })
@@ -101,7 +124,53 @@ class Profile extends Component {
       });
   };
 
+  changePhoto = async () => {
+    const data = new FormData();
+    data.append("img", this.state.file);
+    const userid = await localStorage.getItem("userId");
+    await axios
+      .patch(`http://localhost:5000/user/${userid}`, data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.setState({
+      showModal: false,
+    });
+    await this.getUser();
+    console.log("change photo");
+  };
+
+  changePass = async () => {
+    const data = {
+      password_user: this.state.newPassword,
+    };
+    console.log(data);
+    const userid = await localStorage.getItem("userId");
+    await axios
+      .patch(`http://localhost:5000/newpass/${userid}`, data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.setState({
+      showModalPass: false,
+    });
+  };
+
+  passHandler = (e) => {
+    const value = e.target.value;
+    this.setState({
+      [e.target.name]: value,
+    });
+  };
+
   componentDidMount = () => {
+    console.log("did mount");
     this.getUser();
     this.getMyRecipe();
     this.getLikedRecipe();
@@ -109,31 +178,42 @@ class Profile extends Component {
   };
 
   render() {
-    console.log(this.state);
-    //console.log(this.state.myrecipe);
-    const { myrecipe, likedrecipe, savedrecipe } = this.state;
-    console.log(myrecipe);
+    console.log(this.state.file);
+    const { myrecipe, likedrecipe, savedrecipe, profileData } = this.state;
+    // console.log(myrecipe);
+    console.log("RE RENDER HERE");
     return (
       <>
         <div className={profile.Section}>
-          <div
-            className={profile.Image + " mx-auto"}
-            style={{ backgroundImage: `url(${ImageProfile})` }}
-          >
-            <img
-              src={EditProfileBtn}
-              className={profile.EditButton}
-              alt=""
-              height="24px"
-              width="24px"
-              onClick={this.updateEditSection}
-            />
-          </div>
-          <div className={"mx-auto text-center "}>
-            <p className={profile.Username + " mt-2"}>
-              {this.state.profile.name_user}
-            </p>
-          </div>
+          {profileData &&
+            profileData.map(({ name_user, photo_user }) => {
+              return (
+                <>
+                  <div
+                    className={profile.Image + " mx-auto"}
+                    style={{
+                      backgroundImage: `url(${
+                        photo_user !== null
+                          ? JSON.parse(photo_user)
+                          : ImageProfile
+                      })`,
+                    }}
+                  >
+                    <img
+                      src={EditProfileBtn}
+                      className={profile.EditButton}
+                      alt=""
+                      height="24px"
+                      width="24px"
+                      onClick={this.updateEditSection}
+                    />
+                  </div>
+                  <div className={"mx-auto text-center "}>
+                    <p className={profile.Username + " mt-2"}>{name_user}</p>
+                  </div>
+                </>
+              );
+            })}
           <div
             className={
               this.state.showEdit
@@ -141,10 +221,16 @@ class Profile extends Component {
                 : `${profile.EditSection} mx-auto `
             }
           >
-            <button className={profile.DefaultBtn + " d-block"}>
+            <button
+              className={profile.DefaultBtn + " d-block"}
+              onClick={this.handleShow}
+            >
               Change Photo Profile
             </button>
-            <button className={profile.DefaultBtn + " d-block"}>
+            <button
+              className={profile.DefaultBtn + " d-block"}
+              onClick={this.handleShowPass}
+            >
               Change Password
             </button>
           </div>
@@ -231,6 +317,54 @@ class Profile extends Component {
             </div>
           </div>
         </Container>
+        {/* Modal Change Photo */}
+        <Modal show={this.state.showModal} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Change Photo Profile</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <input
+              type="file"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                this.setState({ file: file });
+              }}
+            />
+            {/* <img src={this.state.file} alt="pict profile" /> */}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={this.changePhoto}>
+              Change Photo Profile
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        {/* Modal Change Password */}
+        <Modal show={this.state.showModalPass} onHide={this.handleClosePass}>
+          <Modal.Header closeButton>
+            <Modal.Title>Change Password</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Label>New Password</Form.Label>
+            <Form.Control
+              type="password"
+              name="newPassword"
+              placeholder="Password"
+              onChange={this.passHandler}
+            />
+            {/* <img src={this.state.file} alt="pict profile" /> */}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClosePass}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={this.changePass}>
+              Submit
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </>
     );
   }

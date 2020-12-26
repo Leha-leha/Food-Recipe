@@ -1,10 +1,10 @@
 const initialState = {
     recipeData: {},
     err: {},
-    isPending: false ,
-    isFullfilled: false,
-    isRejected: false,
     singleRecipe: {},
+    isPending: false ,
+    isFulfilled: false,
+    isRejected: false,
 }
 
 const recipeReducer = (prevState = initialState , action) => {
@@ -14,43 +14,47 @@ const recipeReducer = (prevState = initialState , action) => {
                 ...prevState,
                 isPending: true,
                 isRejected: false,
-                isFullfilled: false,
+                isFulfilled: false,
             }
-            case "GET_ALL_RECIPES_REJECTED":
-            return{
-                ...prevState,
-                isPending: false,
-                isRejected: true,
-                err:action.payload,
-            };
-            case "GET_ALL_RECIPES_FULLFILED":
-                return{
-                    ...prevState,
-                    isPending: false,
-                    isFUllfiled: true,
-                    recipesData: action.payload.data,
-                };
-                case "GET_SINGLE_RECIPE_PENDING":
-                    return{
-                        ...prevState,
-                        isPending: true,
-                        isRejected: false,
-                        isFullfilled: false,
-                    };
-                case
-                "GET_SINGLE_RECIPE_REJECTED":
-                return{
-                    ...prevState,
-                    isPending: false,
-                    isRejected: true,
-                    err:action.payload,
-                };
-                case 
-                "GET_SINGLE_RECIPE_FULLFILLED":
-                default:
-                return{
-                    ...prevState,
-                };
+		case "GET_ALL_RECIPES_REJECTED":
+			return{
+				...prevState,
+				isPending: false,
+				isRejected: true,
+				err:action.payload,
+		};
+		case "GET_ALL_RECIPES_FULLFILED":
+			return{
+				...prevState,
+				isPending: false,
+				isFulfilled: true,
+				recipesData: action.payload.data,
+			};
+		case "GET_SINGLE_RECIPE_PENDING":
+			return{
+				...prevState,
+				isPending: true,
+				isRejected: false,
+				isFulfilled: false,
+			};
+		case "GET_SINGLE_RECIPE_REJECTED":
+			return{
+				...prevState,
+				isPending: false,
+				isRejected: true,
+				err:action.payload,
+			};
+		case "GET_SINGLE_RECIPE_FULFILLED":
+			return{
+				...prevState,
+				isPending: false,
+				isFulfilled: true,
+				singleRecipe: action.payload.data,
+			};
+		default:
+			return{
+				...prevState,
+			};
     }
 };
 

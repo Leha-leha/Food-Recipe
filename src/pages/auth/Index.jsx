@@ -9,6 +9,7 @@ import Mama from "../../assets/Group 697.png";
 import Background from "../../assets/76c7e3577554580136d5f65222046a21.png";
 import { Redirect } from "react-router-dom";
 
+
 import { connect } from "react-redux";
 
 class Index extends Component {
@@ -46,7 +47,7 @@ class Index extends Component {
         email_user: this.state.user.email,
         password_user: this.state.user.password,
       };
-  
+      // console.log(data)
       await dispatch(postLogin(data))
   
       const { auth } = this.props

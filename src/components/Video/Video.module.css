@@ -9,8 +9,8 @@
 }
 
 .VideoSize {
-	max-width: 100%;
-	width: auto;
+	width: 100%;
+	height: auto;
 	border-radius: 5px;
 	margin-bottom: 20px;
 }
@@ -24,18 +24,24 @@
 	margin-top: 30px;
 }
 
-.VideoNextCard {
+.NextVideoCard {
 	margin-bottom: 35px;
+	color: #000000;
+	position: relative;
 }
 .VideoImageCard {
-	min-width: 100%;
-	min-height: 180px;
+	width: 100%;
+	object-fit: contain;
+	/* min-width: 100%; */
+	/* min-height: 180px; */
+	height: auto;
 	background-position: center;
 	background-size: cover;
 	border-radius: 5px;
 	margin-bottom: 5px;
 	position: relative;
 }
+
 .VideoNextText {
 	font-family: 'Airbnb Cereal App Light';
 	font-weight: bold;
@@ -58,5 +64,11 @@
 @media only screen and ( max-width: 576px ) {
 	.VideoTitle {
 		font-size: 20px;
+	}
+}
+
+@media only screen and ( max-width: 1200px ) {
+	.VideoSize {
+		max-width: 100%;
 	}
 }
