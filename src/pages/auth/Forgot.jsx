@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -7,7 +8,32 @@ import Mama from "../../assets/Group 697.png";
 import Background from "../../assets/76c7e3577554580136d5f65222046a21.png";
 
 export default class Forgot extends Component {
+  state = {
+    email_user: "",
+  };
+  handlerChange = (e) => {
+    const value = e.target.value;
+    this.setState({
+      [e.target.name]: value,
+    });
+  };
+  sendMail = async (e) => {
+    e.preventDefault();
+    const data = {
+      email_user: this.state.email_user,
+    };
+    await axios
+      .post("http://localhost:5000/auth/sendemailuser", data)
+      .then((res) => {
+        localStorage.setItem("userId", res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.props.history.push("/code");
+  };
   render() {
+    console.log(this.state.email_user);
     return (
       <div className="container-fluid h-100">
         <div className="row">
@@ -35,13 +61,15 @@ export default class Forgot extends Component {
                 We just need your registered e-mail address to send your
                 password resend
               </span>
-              <Form className="w-100 mb-3 mt-3">
+              <Form className="w-100 mb-3 mt-3" onSubmit={this.sendMail}>
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     type="email"
                     placeholder="Email"
+                    name="email_user"
                     className="pt-4 pb-4 pl-4 pr-0 input"
+                    onChange={this.handlerChange}
                     required
                   />
                 </Form.Group>

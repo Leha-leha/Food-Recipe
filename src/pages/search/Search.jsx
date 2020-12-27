@@ -56,7 +56,11 @@ export default class SearchPage extends Component {
               items.map(({ id_rcp, title_rcp, img_rcp }) => {
                 return (
                   <>
-                    <ListRecipe img={JSON.parse(img_rcp)} title={title_rcp} />
+                    <ListRecipe
+                      img={JSON.parse(img_rcp)}
+                      title={title_rcp}
+                      idUrl={id_rcp}
+                    />
                   </>
                 );
               })}
