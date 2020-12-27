@@ -117,6 +117,25 @@ class Detail extends Component {
       });
   };
 
+  unLike = async () => {
+    const { id } = this.props.match.params;
+    const userid = await localStorage.getItem("userId");
+    const data = {
+      user_id: userid,
+    };
+    axios
+      .delete(`http://localhost:5000/likes/${id}`, { data: data })
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          msg: res.data.msg,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   addSave = async () => {
     const { id } = this.props.match.params;
     const userid = await localStorage.getItem("userId");
@@ -126,6 +145,25 @@ class Detail extends Component {
     };
     axios
       .post("http://localhost:5000/saves", data)
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          msg: res.data.msg,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  unSave = async () => {
+    const { id } = this.props.match.params;
+    const userid = await localStorage.getItem("userId");
+    const data = {
+      user_id: userid,
+    };
+    axios
+      .delete(`http://localhost:5000/saves/${id}`, { data: data })
       .then((res) => {
         console.log(res);
         this.setState({
@@ -166,12 +204,22 @@ class Detail extends Component {
           }}
         >
           <div className={detail.ButtonList}>
+            {/* Like & Save */}
             <div className={detail.SavedButton}>
               <img src={SavedIcon} alt="" onClick={this.addSave} />
             </div>
             <div className={detail.LikedButton}>
               <img src={LikedIcon} alt="" onClick={this.addLike} />
             </div>
+            {/* Like & Save */}
+            {/* UnLike & UnSave */}
+            <div className={detail.UnSavedButton}>
+              <img src={SavedIcon} alt="" onClick={this.unSave} />
+            </div>
+            <div className={detail.UnLikedButton}>
+              <img src={LikedIcon} alt="" onClick={this.unLike} />
+            </div>
+            {/* UnLike & UnSave */}
           </div>
         </div>
         <div className={"mx-auto " + detail.Description}>
