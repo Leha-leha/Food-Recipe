@@ -3,7 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 const tokenLogin = localStorage.getItem("token");
-console.log(tokenLogin);
+console.log(tokenLogin == null);
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => {
   return (
@@ -12,11 +12,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        tokenLogin.length !== 0 ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/login" />
-        )
+        tokenLogin == null ? <Redirect to="/login" /> : <Component {...props} />
       }
     />
   );

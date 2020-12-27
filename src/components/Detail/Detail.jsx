@@ -21,6 +21,7 @@ class Detail extends Component {
     idRecipe: 0,
     comments: [],
     addComment: "",
+    msg: "",
   };
 
   getRecipeById = async () => {
@@ -83,6 +84,9 @@ class Detail extends Component {
       .post("http://localhost:5000/comments", data)
       .then((res) => {
         console.log(res);
+        this.setState({
+          like: true,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -93,6 +97,46 @@ class Detail extends Component {
     this.getCommentByRecipe();
   };
 
+  addLike = async () => {
+    const { id } = this.props.match.params;
+    const userid = await localStorage.getItem("userId");
+    const data = {
+      recipe_id: id,
+      user_id: userid,
+    };
+    axios
+      .post("http://localhost:5000/likes", data)
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          msg: res.data.msg,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  addSave = async () => {
+    const { id } = this.props.match.params;
+    const userid = await localStorage.getItem("userId");
+    const data = {
+      recipe_id: id,
+      user_id: userid,
+    };
+    axios
+      .post("http://localhost:5000/saves", data)
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          msg: res.data.msg,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   componentDidMount = () => {
     this.getRecipeById();
     this.getCommentByRecipe();
@@ -101,6 +145,7 @@ class Detail extends Component {
   render() {
     const { isPending } = this.props.recipes;
     const { comments } = this.state;
+    console.log(this.state.msg);
 
     return (
       <Container>
@@ -122,10 +167,10 @@ class Detail extends Component {
         >
           <div className={detail.ButtonList}>
             <div className={detail.SavedButton}>
-              <img src={SavedIcon} alt="" />
+              <img src={SavedIcon} alt="" onClick={this.addSave} />
             </div>
             <div className={detail.LikedButton}>
-              <img src={LikedIcon} alt="" />
+              <img src={LikedIcon} alt="" onClick={this.addLike} />
             </div>
           </div>
         </div>
