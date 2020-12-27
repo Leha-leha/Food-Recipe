@@ -8,6 +8,8 @@
 .Box img {
   border-radius: 20px;
   filter: brightness(60%);
+  width: 250px;
+  height: 200px;
 }
 
 .BottomLeft {
