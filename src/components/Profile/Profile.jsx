@@ -6,6 +6,8 @@ import profile from "./Profile.module.css";
 import ImageProfile from "../../assets/images/profile/profile.png";
 import EditProfileBtn from "../../assets/icons/edit-image.png";
 
+import ListRecipe from "../../components/ListRecipe/ListRecipe";
+
 class Profile extends Component {
   state = {
     showEdit: false,
@@ -67,9 +69,14 @@ class Profile extends Component {
   };
 
   getUser = async () => {
+    const config = {
+      headers: {
+        "x-access-token": "Bearer " + localStorage.getItem("token"),
+      },
+    };
     const userid = await localStorage.getItem("userId");
     axios
-      .get(`http://localhost:5000/user/${userid}`)
+      .get(`http://localhost:5000/user/${userid}`, config)
       .then((res) => {
         const profile = res.data.data;
         this.setState({
@@ -268,16 +275,13 @@ class Profile extends Component {
           >
             <div className={profile.CardWrapper}>
               {myrecipe &&
-                myrecipe.map(({ title_rcp, img_rcp }) => {
+                myrecipe.map(({ title_rcp, img_rcp, id_rcp }) => {
                   return (
-                    <div
-                      className={profile.CardList}
-                      style={{
-                        backgroundImage: `url('${JSON.parse(img_rcp)}')`,
-                      }}
-                    >
-                      <h1>{title_rcp}</h1>
-                    </div>
+                    <ListRecipe
+                      img={JSON.parse(img_rcp)}
+                      title={title_rcp}
+                      idUrl={id_rcp}
+                    />
                   );
                 })}
             </div>
@@ -285,16 +289,13 @@ class Profile extends Component {
           <div className={profile.ItemList} id="SavedSection">
             <div className={profile.CardWrapper}>
               {savedrecipe &&
-                savedrecipe.map(({ title_rcp, img_rcp }) => {
+                savedrecipe.map(({ title_rcp, img_rcp, id_rcp }) => {
                   return (
-                    <div
-                      className={profile.CardList}
-                      style={{
-                        backgroundImage: `url('${JSON.parse(img_rcp)}')`,
-                      }}
-                    >
-                      <h1>{title_rcp}</h1>
-                    </div>
+                    <ListRecipe
+                      img={JSON.parse(img_rcp)}
+                      title={title_rcp}
+                      idUrl={id_rcp}
+                    />
                   );
                 })}
             </div>
@@ -302,16 +303,13 @@ class Profile extends Component {
           <div className={profile.ItemList} id="LikedSection">
             <div className={profile.CardWrapper}>
               {likedrecipe &&
-                likedrecipe.map(({ title_rcp, img_rcp }) => {
+                likedrecipe.map(({ title_rcp, img_rcp, id_rcp }) => {
                   return (
-                    <div
-                      className={profile.CardList}
-                      style={{
-                        backgroundImage: `url('${JSON.parse(img_rcp)}')`,
-                      }}
-                    >
-                      <h1>{title_rcp}</h1>
-                    </div>
+                    <ListRecipe
+                      img={JSON.parse(img_rcp)}
+                      title={title_rcp}
+                      idUrl={id_rcp}
+                    />
                   );
                 })}
             </div>
