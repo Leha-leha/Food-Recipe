@@ -67,9 +67,14 @@ class Profile extends Component {
   };
 
   getUser = async () => {
+    const config = {
+      headers: {
+        "x-access-token": "Bearer " + localStorage.getItem("token"),
+      },
+    };
     const userid = await localStorage.getItem("userId");
     axios
-      .get(`http://localhost:5000/user/${userid}`)
+      .get(`http://localhost:5000/user/${userid}`, config)
       .then((res) => {
         const profile = res.data.data;
         this.setState({
