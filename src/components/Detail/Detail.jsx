@@ -20,6 +20,7 @@ import PhotoUser from "../../assets/photo-comment.png";
 class Detail extends Component {
   state = {
     recipe: {},
+    editRecipe: {},
     imgRecipe: "",
     videoRecipe: [],
     idRecipe: 0,
@@ -28,6 +29,11 @@ class Detail extends Component {
     addComment: "",
     msg: "",
     show: false,
+    title_rcp: "",
+    ingridients_rcp: "",
+    desc_rcp: "",
+    img: null,
+    videos: null,
   };
 
   getRecipeById = async () => {
@@ -43,6 +49,10 @@ class Detail extends Component {
     } else {
       this.setState({
         recipe: recipes.singleRecipe.data[0],
+        editRecipe: recipes.singleRecipe.data[0],
+        title_rcp: recipes.singleRecipe.data[0].title_rcp,
+        ingridients_rcp: recipes.singleRecipe.data[0].ingridients_rcp,
+        desc_rcp: recipes.singleRecipe.data[0].desc_rcp,
       });
       const image = JSON.parse(this.state.recipe.img_rcp)[0];
       this.setState({
@@ -226,6 +236,39 @@ class Detail extends Component {
       show: true,
     });
 
+  handlerEdit = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  submitEdit = async (e) => {
+    e.preventDefault();
+    const { id } = this.props.match.params;
+    const data = new FormData();
+    data.append("title_rcp", this.state.title_rcp);
+    data.append("ingridients_rcp", this.state.ingridients_rcp);
+    data.append("desc_rcp", this.state.desc_rcp);
+    if (this.state.img !== null) {
+      data.append("img", this.state.img);
+    }
+    if (this.state.videos !== null) {
+      for (let j = 0; j < this.state.videos.length; j++) {
+        data.append("videos", this.state.videos[j]);
+      }
+    }
+    await axios
+      .patch(`http://localhost:5000/recipe/${id}`, data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.getRecipeById();
+    this.setState({
+      show: false,
+    });
+  };
+
   componentDidMount = () => {
     this.getRecipeById();
     this.getCommentByRecipe();
@@ -234,11 +277,11 @@ class Detail extends Component {
   render() {
     const { isPending } = this.props.recipes;
     const userid = localStorage.getItem("userId");
-    console.log(userid);
+    console.log(this.state.editRecipe);
     const { comments } = this.state;
     console.log(this.state.msg);
     const IdUserRecipe = this.state.recipe.id_user;
-
+    const { title_rcp, ingridients_rcp, desc_rcp } = this.state;
     return (
       <Container>
         {/* animasi loading */}
@@ -362,7 +405,7 @@ class Detail extends Component {
           </div>
         </div>
         {/* Modal edit */}
-        <Modal show={this.state.show} onHide={this.handleClose}>
+        <Modal size="lg" show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Modal heading</Modal.Title>
           </Modal.Header>
@@ -370,13 +413,51 @@ class Detail extends Component {
             {/* Body */}
             <Form>
               <Form.Group>
-                <Form.File id="exampleFormControlFile1" label="Image Recipe" />
+                <Form.File
+                  id="exampleFormControlFile1"
+                  label="Image Recipe"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    this.setState({ img: file });
+                  }}
+                />
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlTextarea1">
                 <Form.Label>Title</Form.Label>
-                <Form.Control type="text" placeholder="Title" />
-                <Form.Label>Example textarea</Form.Label>
-                <Form.Control as="textarea" rows={3} />
+                <Form.Control
+                  type="text"
+                  name="title_rcp"
+                  placeholder="Title"
+                  value={title_rcp}
+                  onChange={this.handlerEdit}
+                />
+                <Form.Label>Ingredients</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  name="ingridients_rcp"
+                  rows={7}
+                  value={ingridients_rcp}
+                  onChange={this.handlerEdit}
+                />
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  name="desc_rcp"
+                  rows={3}
+                  value={desc_rcp}
+                  onChange={this.handlerEdit}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.File
+                  id="exampleFormControlFile2"
+                  label="Video"
+                  onChange={(e) => {
+                    const file = e.target.files;
+                    this.setState({ videos: file });
+                  }}
+                  multiple
+                />
               </Form.Group>
             </Form>
           </Modal.Body>
@@ -384,7 +465,7 @@ class Detail extends Component {
             <Button variant="secondary" onClick={this.handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={this.handleClose}>
+            <Button variant="primary" onClick={this.submitEdit}>
               Save Changes
             </Button>
           </Modal.Footer>
