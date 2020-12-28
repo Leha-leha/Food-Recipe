@@ -37,7 +37,7 @@ class PopularRecipe extends React.Component {
           <div className={`${css.Wrapper}`}>
             {PopularRecipes.data &&
               PopularRecipes.data
-                .filter((item, index) => index < 6) // limit the recipes
+                .filter((item, index) => index < 8) // limit the recipes
                 .map(({ title_rcp, img_rcp, id_rcp }) => {
                   return (
                     <ListRecipe
