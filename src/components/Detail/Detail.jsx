@@ -203,6 +203,19 @@ class Detail extends Component {
     this.getCommentByRecipe();
   };
 
+  deleteRecipe = async () => {
+    const { id } = this.props.match.params;
+    await axios
+      .delete(`http://localhost:5000/recipe/${id}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.props.history.push("/profile");
+  };
+
   componentDidMount = () => {
     this.getRecipeById();
     this.getCommentByRecipe();
@@ -234,7 +247,7 @@ class Detail extends Component {
           }}
         >
           <div className="d-flex justify-content-end mr-2">
-            <div className={detail.SavedButton}>
+            <div className={detail.SavedButton} onClick={this.deleteRecipe}>
               <img src={Trash} alt="" />
             </div>
             <div className={detail.LikedButton}>
