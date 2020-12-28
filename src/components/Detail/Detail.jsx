@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import { Container } from "react-bootstrap";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
+import EditProfileBtn from "../../assets/icons/edit-image.png";
+import Trash from "../../assets/icons/trash.png";
+
+import { toast } from "react-toastify";
+
 import axios from "axios";
 
 import detail from "./Detail.module.css";
@@ -23,6 +28,7 @@ class Detail extends Component {
     comments: [],
     addComment: "",
     msg: "",
+   
   };
 
   getRecipeById = async () => {
@@ -119,6 +125,14 @@ class Detail extends Component {
       });
   };
 
+  notify = (arg) => {
+    if(arg === "success") {
+      toast.success("you like")
+    } else if(arg === "error") {
+      toast.warn("you alreday like")
+    }
+  }
+
   unLike = async () => {
     const { id } = this.props.match.params;
     const userid = await localStorage.getItem("userId");
@@ -187,6 +201,7 @@ class Detail extends Component {
   };
 
   render() {
+    
     const { isPending } = this.props.recipes;
     const userid = localStorage.getItem("userId");
     console.log(userid);
@@ -211,13 +226,21 @@ class Detail extends Component {
             backgroundImage: `url(${!isPending && this.state.imgRecipe})`,
           }}
         >
+          <div className="d-flex justify-content-end mr-2">
+           <div className={detail.SavedButton}>
+              <img src={Trash} alt="" />
+            </div>
+            <div className={detail.LikedButton}>
+              <img src={EditProfileBtn} alt="" />
+            </div>
+            </div>
           <div className={detail.ButtonList}>
             {/* Like & Save */}
             <div className={detail.SavedButton}>
               <img src={SavedIcon} alt="" onClick={this.addSave} />
             </div>
             <div className={detail.LikedButton}>
-              <img src={LikedIcon} alt="" onClick={this.addLike} />
+            <img src={LikedIcon} alt="" onClick={this.addLike} />
             </div>
             {/* Like & Save */}
             {/* UnLike & UnSave */}
@@ -228,6 +251,8 @@ class Detail extends Component {
               <img src={LikedIcon} alt="" onClick={this.unLike} />
             </div>
             {/* UnLike & UnSave */}
+           
+            
           </div>
         </div>
         <div className={"mx-auto " + detail.Description}>
@@ -303,8 +328,9 @@ class Detail extends Component {
         </div>
       </Container>
     );
-  }
+  };
 }
+
 
 const mapsStateToProps = ({ recipes }) => {
   return {
