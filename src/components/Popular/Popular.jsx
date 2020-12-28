@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
+import { withRouter } from "react-router-dom";
 
 import css from "./Popular.module.css";
-import RamenNoodles from "../../assets/images/healthy-bone-broth-ramen.png";
 
 class Popular extends React.Component {
   state = {
@@ -14,7 +14,6 @@ class Popular extends React.Component {
     axios
       .get(`${process.env.REACT_APP_URL}/recipes`)
       .then(({data}) => {
-        console.log(JSON.parse(data.data[2].img_rcp));
         this.setState({
           PopularRecipe: data.data[2],
           RecipeImg: JSON.parse(data.data[2].img_rcp),
@@ -37,14 +36,20 @@ class Popular extends React.Component {
             <h2>Popular For You!</h2>
           </div>
           <div className={css.HeroImage}>
-            <img src={RecipeImg[0]} alt='ramen' className='img-fluid rounded' />
+            <img src={RecipeImg[0]} alt='ramen' className='img-fluid' />
           </div>
           <div className={css.HeroText}>
             <h2>{PopularRecipe.title_rcp}</h2>
             <p className={`${css.LongParagraph} mb-4`}>
               {PopularRecipe.desc_rcp}
             </p>
-            <button type='button' className={`btn btn-warning ${css.Btn}`}>
+            <button
+              type='button'
+              className={`btn btn-warning ${css.Btn}`}
+              onClick={() => {
+                this.props.history.push(`recipe/${PopularRecipe.id_rcp}`);
+              }}
+            >
               Learn More
             </button>
           </div>
@@ -54,4 +59,4 @@ class Popular extends React.Component {
   }
 }
 
-export default Popular;
+export default withRouter(Popular);

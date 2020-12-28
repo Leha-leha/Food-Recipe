@@ -15,11 +15,13 @@ main#Main {
 .HeroImage {
   float: left;
   margin-top: 50px;
+  
 }
 
 .HeroImage img {
   width: 400px;
   height: 390px;
+  border-radius: 30px;
 }
 
 .HeroText {
@@ -100,5 +102,11 @@ main#Main {
   .HeroText {
     width: 350px;
     margin-top: 0;
+  }
+}
+
+@media only screen and (min-width: 2560px) {
+  main#Main {
+    background: none;
   }
 }
