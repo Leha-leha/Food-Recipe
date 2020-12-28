@@ -10,12 +10,17 @@
   filter: brightness(60%);
   width: 250px;
   height: 200px;
+  transition: filter 0.2s;
+}
+
+.Box img:hover {
+  filter: brightness(30%);
 }
 
 .BottomLeft {
   position: absolute;
   color: white;
-  top: 90px;
+  top: 150px;
   left: 15px;
 }
 

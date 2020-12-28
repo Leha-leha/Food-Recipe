@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import { Container } from "react-bootstrap";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
+import EditProfileBtn from "../../assets/icons/edit-image.png";
+import Trash from "../../assets/icons/trash.png";
+
+import { toast } from "react-toastify";
+
 import axios from "axios";
 
 
@@ -21,6 +26,7 @@ class Detail extends Component {
     imgRecipe: "",
     videoRecipe: [],
     idRecipe: 0,
+    userId: 0,
     comments: [],
     addComment: "",
     msg: "",
@@ -56,6 +62,7 @@ class Detail extends Component {
 
   getCommentByRecipe = async () => {
     const { id } = this.props.match.params;
+    const userid = await localStorage.getItem("userId");
     await axios
       .get(`http://localhost:5000/comments/${id}`)
       .then((res) => {
@@ -131,6 +138,25 @@ class Detail extends Component {
   }
 
 
+  unLike = async () => {
+    const { id } = this.props.match.params;
+    const userid = await localStorage.getItem("userId");
+    const data = {
+      user_id: userid,
+    };
+    axios
+      .delete(`http://localhost:5000/likes/${id}`, { data: data })
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          msg: res.data.msg,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   addSave = async () => {
     const { id } = this.props.match.params;
     const userid = await localStorage.getItem("userId");
@@ -151,6 +177,38 @@ class Detail extends Component {
       });
   };
 
+  unSave = async () => {
+    const { id } = this.props.match.params;
+    const userid = await localStorage.getItem("userId");
+    const data = {
+      user_id: userid,
+    };
+    axios
+      .delete(`http://localhost:5000/saves/${id}`, { data: data })
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          msg: res.data.msg,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  deleteComment = async (id) => {
+    console.log(`hapus comment ${id}`);
+    await axios
+      .delete(`http://localhost:5000/comments/${id}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.getCommentByRecipe();
+  };
+
   componentDidMount = () => {
     this.getRecipeById();
     this.getCommentByRecipe();
@@ -158,6 +216,8 @@ class Detail extends Component {
 
   render() {
     const { isPending } = this.props.recipes;
+    const userid = localStorage.getItem("userId");
+    console.log(userid);
     const { comments } = this.state;
     console.log(this.state.msg);
 
@@ -179,6 +239,14 @@ class Detail extends Component {
             backgroundImage: `url(${!isPending && this.state.imgRecipe})`,
           }}
         >
+          <div className="d-flex justify-content-end mr-2">
+            <div className={detail.SavedButton}>
+              <img src={Trash} alt="" />
+            </div>
+            <div className={detail.LikedButton}>
+              <img src={EditProfileBtn} alt="" />
+            </div>
+          </div>
           <div className={detail.ButtonList}>
             <div className={detail.SavedButton}>
               <img src={SavedIcon} alt="" onClick={this.addSave} />
@@ -230,25 +298,40 @@ class Detail extends Component {
           <div className={detail.CommentList}>
             <h2 className={detail.TextComment}>Comment</h2>
             {comments !== 0 &&
-              comments.map(({ comment, name_user, photo_user }) => {
-                return (
-                  <div className={"d-flex " + detail.CommentItem}>
-                    <div
-                      className={detail.ImageItem}
-                      style={{
-                        backgroundImage: `url(${JSON.parse(photo_user)})`,
-                      }}
-                    ></div>
-                    <div className={detail.CommentUser}>
-                      <span className={detail.CommentUserName}>
-                        {name_user}
-                      </span>
-                      <br />
-                      <span className={detail.CommentUserText}>{comment}</span>
+              comments.map(
+                ({ comment, name_user, photo_user, id_user, id }) => {
+                  return (
+                    <div className={"d-flex " + detail.CommentItem}>
+                      <div
+                        className={detail.ImageItem}
+                        style={{
+                          backgroundImage: `url(${JSON.parse(photo_user)})`,
+                        }}
+                      ></div>
+                      <div className={detail.CommentUser}>
+                        <span className={detail.CommentUserName}>
+                          {name_user}
+                        </span>
+                        <br />
+                        <span className={detail.CommentUserText}>
+                          {comment}
+                        </span>
+                        <br />
+                        {id_user == userid && (
+                          <a
+                            onClick={() => {
+                              console.log(id);
+                              this.deleteComment(id);
+                            }}
+                          >
+                            delete
+                          </a>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                }
+              )}
           </div>
         </div>
       </Container>

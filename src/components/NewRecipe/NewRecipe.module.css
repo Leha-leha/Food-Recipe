@@ -3,14 +3,12 @@ main#Main {
   background-image: url(../../assets/images/background-2.png);
   background-size: cover;
   margin-top: 50px;
-  
 }
 
 .HeadLine {
   padding: 10px;
-  border-left: 10px solid #EFC81A;
+  border-left: 10px solid #efc81a;
 }
-
 
 .HeroImage {
   float: left;
@@ -20,6 +18,7 @@ main#Main {
 .HeroImage img {
   width: 400px;
   height: 390px;
+  border-radius: 30px;
 }
 
 .HeroText {
@@ -100,5 +99,11 @@ main#Main {
   .HeroText {
     width: 350px;
     margin-top: 0;
+  }
+}
+
+@media only screen and (min-width: 2560px) {
+  main#Main {
+    background: none;
   }
 }

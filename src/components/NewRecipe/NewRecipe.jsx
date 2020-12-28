@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
+import { withRouter } from "react-router-dom";
 
 import css from "./NewRecipe.module.css";
-import Burger from "../../assets/images/burger.png";
 
 class NewRecipe extends React.Component {
   state = {
@@ -14,7 +14,6 @@ class NewRecipe extends React.Component {
     axios
       .get(`${process.env.REACT_APP_URL}/recipes`)
       .then(({data}) => {
-        console.log(JSON.parse(data.data[2].img_rcp));
         this.setState({
           NewRecipe: data.data[0],
           RecipeImg: JSON.parse(data.data[0].img_rcp),
@@ -37,14 +36,18 @@ class NewRecipe extends React.Component {
             <h2>New Recipe</h2>
           </div>
           <div className={css.HeroImage}>
-            <img src={RecipeImg[0]} alt='burger' className='img-fluid rounded' />
+            <img src={RecipeImg[0]} alt='burger' className='img-fluid' />
           </div>
           <div className={css.HeroText}>
             <h2>{NewRecipe.title_rcp}</h2>
-            <p className={`${css.LongParagraph} mb-4`}>
-              {NewRecipe.desc_rcp}
-            </p>
-            <button type='button' className={`btn btn-warning ${css.Btn}`}>
+            <p className={`${css.LongParagraph} mb-4`}>{NewRecipe.desc_rcp}</p>
+            <button
+              type='button'
+              className={`btn btn-warning ${css.Btn}`}
+              onClick={() => {
+                this.props.history.push(`recipe/${NewRecipe.id_rcp}`);
+              }}
+            >
               Learn More
             </button>
           </div>
@@ -55,4 +58,4 @@ class NewRecipe extends React.Component {
   }
 }
 
-export default NewRecipe;
+export default withRouter(NewRecipe);
