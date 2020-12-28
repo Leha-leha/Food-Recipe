@@ -4,6 +4,7 @@ import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import EditProfileBtn from "../../assets/icons/edit-image.png";
 import Trash from "../../assets/icons/trash.png";
+import { toast } from "react-toastify";
 
 import axios from "axios";
 
