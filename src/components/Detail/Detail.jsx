@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 
 import axios from "axios";
 
+
 import detail from "./Detail.module.css";
 import { getSingleRecipe } from "../../redux/actionCreators/Recipes";
 // import Image from '../../assets/4da51338c06dd21688b82eae3bc9dfa6.jpg'
@@ -17,6 +18,7 @@ import LikedIcon from "../../assets/icons/like.png";
 import SavedIcon from "../../assets/icons/saved.png";
 import PlayIcon from "../../assets/icons/play.png";
 import PhotoUser from "../../assets/photo-comment.png";
+import { toast } from "react-toastify";
 
 class Detail extends Component {
   state = {
@@ -30,6 +32,8 @@ class Detail extends Component {
     msg: "",
     show: false,
   };
+  
+  
 
   getRecipeById = async () => {
     const { id } = this.props.match.params;
@@ -117,21 +121,23 @@ class Detail extends Component {
       .then((res) => {
         console.log(res);
         this.setState({
-          msg: res.data.msg,
+          msg: res.data.msg.this.notify("Error") ,
         });
       })
       .catch((err) => {
         console.log(err);
+        this.notify("success")
       });
   };
 
   notify = (arg) => {
-    if (arg === "success") {
-      toast.success("you like");
-    } else if (arg === "error") {
-      toast.warn("you alreday like");
+    if(arg === "success"){
+      toast.warn("Your Already Like")
+    } else if(arg === "Error") {
+      toast.success("Your like this recipe")
     }
-  };
+  }
+
 
   unLike = async () => {
     const { id } = this.props.match.params;
@@ -265,22 +271,12 @@ class Detail extends Component {
             </div>
           </div>
           <div className={detail.ButtonList}>
-            {/* Like & Save */}
             <div className={detail.SavedButton}>
               <img src={SavedIcon} alt="" onClick={this.addSave} />
             </div>
             <div className={detail.LikedButton}>
               <img src={LikedIcon} alt="" onClick={this.addLike} />
             </div>
-            {/* Like & Save */}
-            {/* UnLike & UnSave */}
-            <div className={detail.UnSavedButton}>
-              <img src={SavedIcon} alt="" onClick={this.unSave} />
-            </div>
-            <div className={detail.UnLikedButton}>
-              <img src={LikedIcon} alt="" onClick={this.unLike} />
-            </div>
-            {/* UnLike & UnSave */}
           </div>
         </div>
         <div className={"mx-auto " + detail.Description}>
