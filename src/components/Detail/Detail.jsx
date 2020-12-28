@@ -19,6 +19,7 @@ class Detail extends Component {
     imgRecipe: "",
     videoRecipe: [],
     idRecipe: 0,
+    userId: 0,
     comments: [],
     addComment: "",
     msg: "",
@@ -52,6 +53,7 @@ class Detail extends Component {
 
   getCommentByRecipe = async () => {
     const { id } = this.props.match.params;
+    const userid = await localStorage.getItem("userId");
     await axios
       .get(`http://localhost:5000/comments/${id}`)
       .then((res) => {
@@ -175,6 +177,10 @@ class Detail extends Component {
       });
   };
 
+  deleteComment = (id) => {
+    console.log(`hapus comment ${id}`);
+  };
+
   componentDidMount = () => {
     this.getRecipeById();
     this.getCommentByRecipe();
@@ -182,6 +188,8 @@ class Detail extends Component {
 
   render() {
     const { isPending } = this.props.recipes;
+    const userid = localStorage.getItem("userId");
+    console.log(userid);
     const { comments } = this.state;
     console.log(this.state.msg);
 
@@ -264,25 +272,33 @@ class Detail extends Component {
           <div className={detail.CommentList}>
             <h2 className={detail.TextComment}>Comment</h2>
             {comments !== 0 &&
-              comments.map(({ comment, name_user, photo_user }) => {
-                return (
-                  <div className={"d-flex " + detail.CommentItem}>
-                    <div
-                      className={detail.ImageItem}
-                      style={{
-                        backgroundImage: `url(${JSON.parse(photo_user)})`,
-                      }}
-                    ></div>
-                    <div className={detail.CommentUser}>
-                      <span className={detail.CommentUserName}>
-                        {name_user}
-                      </span>
-                      <br />
-                      <span className={detail.CommentUserText}>{comment}</span>
+              comments.map(
+                ({ comment, name_user, photo_user, id_user, id }) => {
+                  return (
+                    <div className={"d-flex " + detail.CommentItem}>
+                      <div
+                        className={detail.ImageItem}
+                        style={{
+                          backgroundImage: `url(${JSON.parse(photo_user)})`,
+                        }}
+                      ></div>
+                      <div className={detail.CommentUser}>
+                        <span className={detail.CommentUserName}>
+                          {name_user}
+                        </span>
+                        <br />
+                        <span className={detail.CommentUserText}>
+                          {comment}
+                        </span>
+                        <br />
+                        {id_user == userid && (
+                          <a onClick={this.deleteComment}>delete</a>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                }
+              )}
           </div>
         </div>
       </Container>
