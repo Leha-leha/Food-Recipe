@@ -237,6 +237,7 @@ class Detail extends Component {
     console.log(userid);
     const { comments } = this.state;
     console.log(this.state.msg);
+    const IdUserRecipe = this.state.recipe.id_user;
 
     return (
       <Container>
@@ -256,14 +257,16 @@ class Detail extends Component {
             backgroundImage: `url(${!isPending && this.state.imgRecipe})`,
           }}
         >
-          <div className="d-flex justify-content-end mr-2">
-            <div className={detail.SavedButton} onClick={this.deleteRecipe}>
-              <img src={Trash} alt="" />
+          {IdUserRecipe == userid && (
+            <div className="d-flex justify-content-end mr-2">
+              <div className={detail.SavedButton} onClick={this.deleteRecipe}>
+                <img src={Trash} alt="" />
+              </div>
+              <div className={detail.LikedButton} onClick={this.handleShow}>
+                <img src={EditProfileBtn} alt="" />
+              </div>
             </div>
-            <div className={detail.LikedButton} onClick={this.handleShow}>
-              <img src={EditProfileBtn} alt="" />
-            </div>
-          </div>
+          )}
           <div className={detail.ButtonList}>
             <div className={detail.SavedButton}>
               <img src={SavedIcon} alt="" onClick={this.addSave} />
