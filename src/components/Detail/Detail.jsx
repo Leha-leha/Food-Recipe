@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Modal, Button, Form } from "react-bootstrap";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import EditProfileBtn from "../../assets/icons/edit-image.png";
 import Trash from "../../assets/icons/trash.png";
-
 import { toast } from "react-toastify";
 
 import axios from "axios";
@@ -21,13 +20,20 @@ import PhotoUser from "../../assets/photo-comment.png";
 class Detail extends Component {
   state = {
     recipe: {},
+    editRecipe: {},
     imgRecipe: "",
     videoRecipe: [],
     idRecipe: 0,
+    userId: 0,
     comments: [],
     addComment: "",
     msg: "",
-   
+    show: false,
+    title_rcp: "",
+    ingridients_rcp: "",
+    desc_rcp: "",
+    img: null,
+    videos: null,
   };
 
   getRecipeById = async () => {
@@ -43,6 +49,10 @@ class Detail extends Component {
     } else {
       this.setState({
         recipe: recipes.singleRecipe.data[0],
+        editRecipe: recipes.singleRecipe.data[0],
+        title_rcp: recipes.singleRecipe.data[0].title_rcp,
+        ingridients_rcp: recipes.singleRecipe.data[0].ingridients_rcp,
+        desc_rcp: recipes.singleRecipe.data[0].desc_rcp,
       });
       const image = JSON.parse(this.state.recipe.img_rcp)[0];
       this.setState({
@@ -58,6 +68,7 @@ class Detail extends Component {
 
   getCommentByRecipe = async () => {
     const { id } = this.props.match.params;
+    const userid = await localStorage.getItem("userId");
     await axios
       .get(`http://localhost:5000/comments/${id}`)
       .then((res) => {
@@ -115,21 +126,22 @@ class Detail extends Component {
       .then((res) => {
         console.log(res);
         this.setState({
-          msg: res.data.msg,
+          msg: res.data.msg.this.notify("Error"),
         });
       })
       .catch((err) => {
         console.log(err);
+        this.notify("success");
       });
   };
 
   notify = (arg) => {
-    if(arg === "success") {
-      toast.success("you like")
-    } else if(arg === "error") {
-      toast.warn("you alreday like")
+    if (arg === "success") {
+      toast.warn("Your Already Like");
+    } else if (arg === "Error") {
+      toast.success("Your like this recipe");
     }
-  }
+  };
 
   unLike = async () => {
     const { id } = this.props.match.params;
@@ -189,17 +201,87 @@ class Detail extends Component {
       });
   };
 
+  deleteComment = async (id) => {
+    console.log(`hapus comment ${id}`);
+    await axios
+      .delete(`http://localhost:5000/comments/${id}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.getCommentByRecipe();
+  };
+
+  deleteRecipe = async () => {
+    const { id } = this.props.match.params;
+    await axios
+      .delete(`http://localhost:5000/recipe/${id}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.props.history.push("/profile");
+  };
+
+  handleClose = () =>
+    this.setState({
+      show: false,
+    });
+  handleShow = () =>
+    this.setState({
+      show: true,
+    });
+
+  handlerEdit = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  submitEdit = async (e) => {
+    e.preventDefault();
+    const { id } = this.props.match.params;
+    const data = new FormData();
+    data.append("title_rcp", this.state.title_rcp);
+    data.append("ingridients_rcp", this.state.ingridients_rcp);
+    data.append("desc_rcp", this.state.desc_rcp);
+    if (this.state.img !== null) {
+      data.append("img", this.state.img);
+    }
+    if (this.state.videos !== null) {
+      for (let j = 0; j < this.state.videos.length; j++) {
+        data.append("videos", this.state.videos[j]);
+      }
+    }
+    await axios
+      .patch(`http://localhost:5000/recipe/${id}`, data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.getRecipeById();
+    this.setState({
+      show: false,
+    });
+  };
+
   componentDidMount = () => {
     this.getRecipeById();
     this.getCommentByRecipe();
   };
 
   render() {
-    
     const { isPending } = this.props.recipes;
+    const userid = localStorage.getItem("userId");
+    console.log(this.state.editRecipe);
     const { comments } = this.state;
     console.log(this.state.msg);
-
+    const IdUserRecipe = this.state.recipe.id_user;
+    const { title_rcp, ingridients_rcp, desc_rcp } = this.state;
     return (
       <Container>
         {/* animasi loading */}
@@ -218,33 +300,30 @@ class Detail extends Component {
             backgroundImage: `url(${!isPending && this.state.imgRecipe})`,
           }}
         >
-          <div className="d-flex justify-content-end mr-2">
-           <div className={detail.SavedButton}>
-              <img src={Trash} alt="" />
+          {IdUserRecipe == userid && (
+            <div className="d-flex justify-content-end mr-2">
+              <div className={detail.SavedButton} onClick={this.deleteRecipe}>
+                <img src={Trash} alt="" />
+              </div>
+              <div className={detail.LikedButton} onClick={this.handleShow}>
+                <img src={EditProfileBtn} alt="" />
+              </div>
             </div>
-            <div className={detail.LikedButton}>
-              <img src={EditProfileBtn} alt="" />
-            </div>
-            </div>
+          )}
           <div className={detail.ButtonList}>
-            {/* Like & Save */}
             <div className={detail.SavedButton}>
               <img src={SavedIcon} alt="" onClick={this.addSave} />
             </div>
             <div className={detail.LikedButton}>
-            <img src={LikedIcon} alt="" onClick={this.addLike} />
+              <img src={LikedIcon} alt="" onClick={this.addLike} />
             </div>
-            {/* Like & Save */}
-            {/* UnLike & UnSave */}
+            {/* Unlike & UnSave */}
             <div className={detail.UnSavedButton}>
               <img src={SavedIcon} alt="" onClick={this.unSave} />
             </div>
             <div className={detail.UnLikedButton}>
               <img src={LikedIcon} alt="" onClick={this.unLike} />
             </div>
-            {/* UnLike & UnSave */}
-           
-            
           </div>
         </div>
         <div className={"mx-auto " + detail.Description}>
@@ -289,32 +368,112 @@ class Detail extends Component {
           <div className={detail.CommentList}>
             <h2 className={detail.TextComment}>Comment</h2>
             {comments !== 0 &&
-              comments.map(({ comment, name_user, photo_user }) => {
-                return (
-                  <div className={"d-flex " + detail.CommentItem}>
-                    <div
-                      className={detail.ImageItem}
-                      style={{
-                        backgroundImage: `url(${JSON.parse(photo_user)})`,
-                      }}
-                    ></div>
-                    <div className={detail.CommentUser}>
-                      <span className={detail.CommentUserName}>
-                        {name_user}
-                      </span>
-                      <br />
-                      <span className={detail.CommentUserText}>{comment}</span>
+              comments.map(
+                ({ comment, name_user, photo_user, id_user, id }) => {
+                  return (
+                    <div className={"d-flex " + detail.CommentItem}>
+                      <div
+                        className={detail.ImageItem}
+                        style={{
+                          backgroundImage: `url(${JSON.parse(photo_user)})`,
+                        }}
+                      ></div>
+                      <div className={detail.CommentUser}>
+                        <span className={detail.CommentUserName}>
+                          {name_user}
+                        </span>
+                        <br />
+                        <span className={detail.CommentUserText}>
+                          {comment}
+                        </span>
+                        <br />
+                        {id_user == userid && (
+                          <a
+                            onClick={() => {
+                              console.log(id);
+                              this.deleteComment(id);
+                            }}
+                          >
+                            delete
+                          </a>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                }
+              )}
           </div>
         </div>
+        {/* Modal edit */}
+        <Modal size="lg" show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {/* Body */}
+            <Form>
+              <Form.Group>
+                <Form.File
+                  id="exampleFormControlFile1"
+                  label="Image Recipe"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    this.setState({ img: file });
+                  }}
+                />
+              </Form.Group>
+              <Form.Group controlId="exampleForm.ControlTextarea1">
+                <Form.Label>Title</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="title_rcp"
+                  placeholder="Title"
+                  value={title_rcp}
+                  onChange={this.handlerEdit}
+                />
+                <Form.Label>Ingredients</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  name="ingridients_rcp"
+                  rows={7}
+                  value={ingridients_rcp}
+                  onChange={this.handlerEdit}
+                />
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  name="desc_rcp"
+                  rows={3}
+                  value={desc_rcp}
+                  onChange={this.handlerEdit}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.File
+                  id="exampleFormControlFile2"
+                  label="Video"
+                  onChange={(e) => {
+                    const file = e.target.files;
+                    this.setState({ videos: file });
+                  }}
+                  multiple
+                />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={this.submitEdit}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Container>
     );
-  };
+  }
 }
-
 
 const mapsStateToProps = ({ recipes }) => {
   return {

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 
-import Navbar from '../../components/Navbar/Navbar'
-import Detail from '../../components/Detail/Detail'
-import Footer from '../../components/Footer/Footer'
-import { ToastContainer, Toast } from "react-toastify";
+import Navbar from '../../components/Navbar/Navbar';
+import Detail from '../../components/Detail/Detail';
+import Footer from '../../components/Footer/Footer';
+import { ToastContainer , toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class DetailRecipe extends Component {
 	render () {
@@ -12,7 +13,7 @@ class DetailRecipe extends Component {
 				<Navbar />
 				<Detail />
 				<Footer />
-				<ToastContainer />
+				<ToastContainer/>
 			</>
 		)
 	}
