@@ -1,14 +1,13 @@
 import React, { Component } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Modal, Button, Form } from "react-bootstrap";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import EditProfileBtn from "../../assets/icons/edit-image.png";
 import Trash from "../../assets/icons/trash.png";
-
 import { toast } from "react-toastify";
 
-import axios from "axios";
 
+import axios from "axios";
 
 import detail from "./Detail.module.css";
 import { getSingleRecipe } from "../../redux/actionCreators/Recipes";
@@ -18,7 +17,6 @@ import LikedIcon from "../../assets/icons/like.png";
 import SavedIcon from "../../assets/icons/saved.png";
 import PlayIcon from "../../assets/icons/play.png";
 import PhotoUser from "../../assets/photo-comment.png";
-import { toast } from "react-toastify";
 
 class Detail extends Component {
   state = {
@@ -30,9 +28,8 @@ class Detail extends Component {
     comments: [],
     addComment: "",
     msg: "",
+    show: false,
   };
-  
-  
 
   getRecipeById = async () => {
     const { id } = this.props.match.params;
@@ -120,23 +117,22 @@ class Detail extends Component {
       .then((res) => {
         console.log(res);
         this.setState({
-          msg: res.data.msg.this.notify("Error") ,
+          msg: res.data.msg.this.notify("Error"),
         });
       })
       .catch((err) => {
         console.log(err);
-        this.notify("success")
+        this.notify("success");
       });
   };
 
   notify = (arg) => {
-    if(arg === "success"){
-      toast.warn("Your Already Like")
-    } else if(arg === "Error") {
-      toast.success("Your like this recipe")
+    if (arg === "success") {
+      toast.warn("Your Already Like");
+    } else if (arg === "Error") {
+      toast.info("Your unlike this recipe");
     }
-  }
-
+  };
 
   unLike = async () => {
     const { id } = this.props.match.params;
@@ -222,6 +218,15 @@ class Detail extends Component {
     this.props.history.push("/profile");
   };
 
+  handleClose = () =>
+    this.setState({
+      show: false,
+    });
+  handleShow = () =>
+    this.setState({
+      show: true,
+    });
+
   componentDidMount = () => {
     this.getRecipeById();
     this.getCommentByRecipe();
@@ -233,6 +238,7 @@ class Detail extends Component {
     console.log(userid);
     const { comments } = this.state;
     console.log(this.state.msg);
+    const IdUserRecipe = this.state.recipe.id_user;
 
     return (
       <Container>
@@ -252,20 +258,29 @@ class Detail extends Component {
             backgroundImage: `url(${!isPending && this.state.imgRecipe})`,
           }}
         >
-          <div className="d-flex justify-content-end mr-2">
-            <div className={detail.SavedButton} onClick={this.deleteRecipe}>
-              <img src={Trash} alt="" />
+          {IdUserRecipe == userid && (
+            <div className="d-flex justify-content-end mr-2">
+              <div className={detail.SavedButton} onClick={this.deleteRecipe}>
+                <img src={Trash} alt="" />
+              </div>
+              <div className={detail.LikedButton} onClick={this.handleShow}>
+                <img src={EditProfileBtn} alt="" />
+              </div>
             </div>
-            <div className={detail.LikedButton}>
-              <img src={EditProfileBtn} alt="" />
-            </div>
-          </div>
+          )}
           <div className={detail.ButtonList}>
             <div className={detail.SavedButton}>
               <img src={SavedIcon} alt="" onClick={this.addSave} />
             </div>
             <div className={detail.LikedButton}>
               <img src={LikedIcon} alt="" onClick={this.addLike} />
+            </div>
+            {/* Unlike & UnSave */}
+            <div className={detail.UnSavedButton}>
+              <img src={SavedIcon} alt="" onClick={this.unSave} />
+            </div>
+            <div className={detail.UnLikedButton}>
+              <img src={LikedIcon} alt="" onClick={this.unLike} />
             </div>
           </div>
         </div>
@@ -347,6 +362,34 @@ class Detail extends Component {
               )}
           </div>
         </div>
+        {/* Modal edit */}
+        <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {/* Body */}
+            <Form>
+              <Form.Group>
+                <Form.File id="exampleFormControlFile1" label="Image Recipe" />
+              </Form.Group>
+              <Form.Group controlId="exampleForm.ControlTextarea1">
+                <Form.Label>Title</Form.Label>
+                <Form.Control type="text" placeholder="Title" />
+                <Form.Label>Example textarea</Form.Label>
+                <Form.Control as="textarea" rows={3} />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={this.handleClose}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Container>
     );
   }
