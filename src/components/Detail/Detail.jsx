@@ -5,10 +5,7 @@ import { connect } from "react-redux";
 import EditProfileBtn from "../../assets/icons/edit-image.png";
 import Trash from "../../assets/icons/trash.png";
 
-import { toast } from "react-toastify";
-
 import axios from "axios";
-
 
 import detail from "./Detail.module.css";
 import { getSingleRecipe } from "../../redux/actionCreators/Recipes";
@@ -32,8 +29,6 @@ class Detail extends Component {
     msg: "",
     show: false,
   };
-  
-  
 
   getRecipeById = async () => {
     const { id } = this.props.match.params;
@@ -121,23 +116,22 @@ class Detail extends Component {
       .then((res) => {
         console.log(res);
         this.setState({
-          msg: res.data.msg.this.notify("Error") ,
+          msg: res.data.msg.this.notify("Error"),
         });
       })
       .catch((err) => {
         console.log(err);
-        this.notify("success")
+        this.notify("success");
       });
   };
 
   notify = (arg) => {
-    if(arg === "success"){
-      toast.warn("Your Already Like")
-    } else if(arg === "Error") {
-      toast.success("Your like this recipe")
+    if (arg === "success") {
+      toast.warn("Your Already Like");
+    } else if (arg === "Error") {
+      toast.success("Your like this recipe");
     }
-  }
-
+  };
 
   unLike = async () => {
     const { id } = this.props.match.params;
@@ -276,6 +270,13 @@ class Detail extends Component {
             </div>
             <div className={detail.LikedButton}>
               <img src={LikedIcon} alt="" onClick={this.addLike} />
+            </div>
+            {/* Unlike & UnSave */}
+            <div className={detail.UnSavedButton}>
+              <img src={SavedIcon} alt="" onClick={this.unSave} />
+            </div>
+            <div className={detail.UnLikedButton}>
+              <img src={LikedIcon} alt="" onClick={this.unLike} />
             </div>
           </div>
         </div>
