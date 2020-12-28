@@ -51,7 +51,8 @@ export default class SearchPage extends Component {
           <Container>
             <h3 className="session-tag gap-content">Results</h3>
           </Container>
-          <div style={{ float: "left", width: "80%", height: "80%" }}>
+          
+          <div className="d-flex justify-content-start">
             {items.length !== 0 &&
               items.map(({ id_rcp, title_rcp, img_rcp }) => {
                 return (
@@ -65,6 +66,7 @@ export default class SearchPage extends Component {
                 );
               })}
           </div>
+          
         </div>
       </>
     );

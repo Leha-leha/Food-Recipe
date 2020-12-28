@@ -116,7 +116,7 @@ class Recipesadd extends Component {
         >
           <div className="card-body">
             <Form encType="multipart/form-data" onSubmit={this.submitHandler}>
-              <Jumbotron style={{ height: "480px" }} className="">
+              <Jumbotron style={{ height: "680px" }} className="">
                 <div className="row">
                   <div className="col-md-8 row">
                     <input
@@ -127,7 +127,7 @@ class Recipesadd extends Component {
                       placeholder="Add"
                       multiple
                     />
-                    <img src={this.state.file} alt="lah" />
+                    <img src={this.state.file} alt="Add photo" />
                   </div>
                 </div>
               </Jumbotron>

@@ -4,6 +4,7 @@ import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
 
+
 import detail from "./Detail.module.css";
 import { getSingleRecipe } from "../../redux/actionCreators/Recipes";
 // import Image from '../../assets/4da51338c06dd21688b82eae3bc9dfa6.jpg'
@@ -12,6 +13,7 @@ import LikedIcon from "../../assets/icons/like.png";
 import SavedIcon from "../../assets/icons/saved.png";
 import PlayIcon from "../../assets/icons/play.png";
 import PhotoUser from "../../assets/photo-comment.png";
+import { toast } from "react-toastify";
 
 class Detail extends Component {
   state = {
@@ -23,6 +25,8 @@ class Detail extends Component {
     addComment: "",
     msg: "",
   };
+  
+  
 
   getRecipeById = async () => {
     const { id } = this.props.match.params;
@@ -109,13 +113,23 @@ class Detail extends Component {
       .then((res) => {
         console.log(res);
         this.setState({
-          msg: res.data.msg,
+          msg: res.data.msg.this.notify("Error") ,
         });
       })
       .catch((err) => {
         console.log(err);
+        this.notify("success")
       });
   };
+
+  notify = (arg) => {
+    if(arg === "success"){
+      toast.warn("Your Already Like")
+    } else if(arg === "Error") {
+      toast.success("Your like this recipe")
+    }
+  }
+
 
   addSave = async () => {
     const { id } = this.props.match.params;

@@ -1,19 +1,21 @@
 .Box {
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   margin: 10px;
 }
 
 .Box img {
   border-radius: 20px;
   filter: brightness(60%);
+  width: 250px;
+  height: 200px;
 }
 
 .BottomLeft {
   position: absolute;
   color: white;
-  bottom: 90PX;
+  top: 90px;
   left: 15px;
 }
 
