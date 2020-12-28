@@ -16,6 +16,7 @@ main {
 .HeroImage img {
   width: 400px;
   height: 390px;
+  border-radius: 30px;
 }
 
 .HeroText {
