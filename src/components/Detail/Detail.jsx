@@ -4,6 +4,7 @@ import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import EditProfileBtn from "../../assets/icons/edit-image.png";
 import Trash from "../../assets/icons/trash.png";
+import { toast } from "react-toastify";
 
 import axios from "axios";
 
@@ -15,7 +16,6 @@ import LikedIcon from "../../assets/icons/like.png";
 import SavedIcon from "../../assets/icons/saved.png";
 import PlayIcon from "../../assets/icons/play.png";
 import PhotoUser from "../../assets/photo-comment.png";
-import { toast } from "react-toastify";
 
 class Detail extends Component {
   state = {
