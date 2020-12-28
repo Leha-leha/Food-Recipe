@@ -18,7 +18,6 @@ import LikedIcon from "../../assets/icons/like.png";
 import SavedIcon from "../../assets/icons/saved.png";
 import PlayIcon from "../../assets/icons/play.png";
 import PhotoUser from "../../assets/photo-comment.png";
-import { toast } from "react-toastify";
 
 class Detail extends Component {
   state = {
