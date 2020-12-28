@@ -28,7 +28,6 @@ class Detail extends Component {
     comments: [],
     addComment: "",
     msg: "",
-   
   };
 
   getRecipeById = async () => {
@@ -126,12 +125,12 @@ class Detail extends Component {
   };
 
   notify = (arg) => {
-    if(arg === "success") {
-      toast.success("you like")
-    } else if(arg === "error") {
-      toast.warn("you alreday like")
+    if (arg === "success") {
+      toast.success("you like");
+    } else if (arg === "error") {
+      toast.warn("you alreday like");
     }
-  }
+  };
 
   unLike = async () => {
     const { id } = this.props.match.params;
@@ -191,8 +190,17 @@ class Detail extends Component {
       });
   };
 
-  deleteComment = (id) => {
+  deleteComment = async (id) => {
     console.log(`hapus comment ${id}`);
+    await axios
+      .delete(`http://localhost:5000/comments/${id}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.getCommentByRecipe();
   };
 
   componentDidMount = () => {
@@ -201,7 +209,6 @@ class Detail extends Component {
   };
 
   render() {
-    
     const { isPending } = this.props.recipes;
     const userid = localStorage.getItem("userId");
     console.log(userid);
@@ -227,20 +234,20 @@ class Detail extends Component {
           }}
         >
           <div className="d-flex justify-content-end mr-2">
-           <div className={detail.SavedButton}>
+            <div className={detail.SavedButton}>
               <img src={Trash} alt="" />
             </div>
             <div className={detail.LikedButton}>
               <img src={EditProfileBtn} alt="" />
             </div>
-            </div>
+          </div>
           <div className={detail.ButtonList}>
             {/* Like & Save */}
             <div className={detail.SavedButton}>
               <img src={SavedIcon} alt="" onClick={this.addSave} />
             </div>
             <div className={detail.LikedButton}>
-            <img src={LikedIcon} alt="" onClick={this.addLike} />
+              <img src={LikedIcon} alt="" onClick={this.addLike} />
             </div>
             {/* Like & Save */}
             {/* UnLike & UnSave */}
@@ -251,8 +258,6 @@ class Detail extends Component {
               <img src={LikedIcon} alt="" onClick={this.unLike} />
             </div>
             {/* UnLike & UnSave */}
-           
-            
           </div>
         </div>
         <div className={"mx-auto " + detail.Description}>
@@ -317,7 +322,14 @@ class Detail extends Component {
                         </span>
                         <br />
                         {id_user == userid && (
-                          <a onClick={this.deleteComment}>delete</a>
+                          <a
+                            onClick={() => {
+                              console.log(id);
+                              this.deleteComment(id);
+                            }}
+                          >
+                            delete
+                          </a>
                         )}
                       </div>
                     </div>
@@ -328,9 +340,8 @@ class Detail extends Component {
         </div>
       </Container>
     );
-  };
+  }
 }
-
 
 const mapsStateToProps = ({ recipes }) => {
   return {
