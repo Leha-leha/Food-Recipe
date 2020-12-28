@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Modal, Button, Form } from "react-bootstrap";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import EditProfileBtn from "../../assets/icons/edit-image.png";
@@ -28,6 +28,7 @@ class Detail extends Component {
     comments: [],
     addComment: "",
     msg: "",
+    show: false,
   };
 
   getRecipeById = async () => {
@@ -216,6 +217,15 @@ class Detail extends Component {
     this.props.history.push("/profile");
   };
 
+  handleClose = () =>
+    this.setState({
+      show: false,
+    });
+  handleShow = () =>
+    this.setState({
+      show: true,
+    });
+
   componentDidMount = () => {
     this.getRecipeById();
     this.getCommentByRecipe();
@@ -250,7 +260,7 @@ class Detail extends Component {
             <div className={detail.SavedButton} onClick={this.deleteRecipe}>
               <img src={Trash} alt="" />
             </div>
-            <div className={detail.LikedButton}>
+            <div className={detail.LikedButton} onClick={this.handleShow}>
               <img src={EditProfileBtn} alt="" />
             </div>
           </div>
@@ -351,6 +361,34 @@ class Detail extends Component {
               )}
           </div>
         </div>
+        {/* Modal edit */}
+        <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {/* Body */}
+            <Form>
+              <Form.Group>
+                <Form.File id="exampleFormControlFile1" label="Image Recipe" />
+              </Form.Group>
+              <Form.Group controlId="exampleForm.ControlTextarea1">
+                <Form.Label>Title</Form.Label>
+                <Form.Control type="text" placeholder="Title" />
+                <Form.Label>Example textarea</Form.Label>
+                <Form.Control as="textarea" rows={3} />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={this.handleClose}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Container>
     );
   }
