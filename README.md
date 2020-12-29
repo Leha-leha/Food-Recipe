@@ -1,70 +1,55 @@
-# Getting Started with Create React App
+# Food Recipes <img src="https://img.shields.io/badge/Build%20with-ReactJs-61dbfb?style=popout&logo=react">
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Contents
 
-## Available Scripts
+- [Description](#description)
+- [Features](#features)
+- [Requirements](#requirements-for-development)
+- [Screenshoots](#screenshoots)
+- [Demo Food Recipes Web](#demo-blanja-web)
+- [Related Project](#related-project)
 
-In the project directory, you can run:
+## Description
 
-### `npm start`
+**Blanja Web** is a recipe sharing service that allowing visitors to upload and search through user-created recipes. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Features
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Search recipe
+- Edit recipe
+- Add recipe
+- Save recipe
+- Edit profile
+- Reset Password
+- and more...
 
-### `npm test`
+## Requirements for Development
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [`Node Js`](https://nodejs.org/en/)
+- [`npm`](https://www.npmjs.com/get-npm)
+- [`ReactJs`](https://reactjs.org/)
+- [`Recipes Backend`](https://github.com/Baruak-da-Familia/blanja-api.git)
 
-### `npm run build`
+## Screenshoots
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<div align="center">
+    <img width="100%" src="./src/assets/images/demo-1.png">
+    <img width="100%" src="./src/assets/images/demo-2.png">
+    <img width="100%" src="././src/assets/images/demo-3.png">
+</div>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Demo Food Recipes 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Let's try it.
 
-### `npm run eject`
+<a href="http://54.175.146.137:3000/">
+  <img src="https://img.shields.io/badge/Blanja%20Web-Link%20Demo-blue.svg?style=popout&logo=firefox"/>
+</a>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Related Project
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+RESTful API for this web application.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<a href="https://github.com/Baruak-da-Familia/blanja-api.git">
+<img src="https://img.shields.io/badge/Blanja%20Backend-Repository-blue.svg?style=popout&logo=github"/>
+</a>
