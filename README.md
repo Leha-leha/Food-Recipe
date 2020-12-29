@@ -28,7 +28,7 @@
 - [`Node Js`](https://nodejs.org/en/)
 - [`npm`](https://www.npmjs.com/get-npm)
 - [`ReactJs`](https://reactjs.org/)
-- [`Recipes Backend`](https://github.com/Baruak-da-Familia/blanja-api.git)
+- [`Recipes Backend`](https://github.com/Leha-leha/Recipe_API)
 
 ## Screenshoots
 
@@ -42,14 +42,14 @@
 
 Let's try it.
 
-<a href="http://54.175.146.137:3000/">
-  <img src="https://img.shields.io/badge/Blanja%20Web-Link%20Demo-blue.svg?style=popout&logo=firefox"/>
+<a href="#link-demo">
+  <img src="https://img.shields.io/badge/Food%20Recipes-Link%20Demo-blue.svg?style=popout&logo=firefox"/>
 </a>
 
 ## Related Project
 
 RESTful API for this web application.
 
-<a href="https://github.com/Baruak-da-Familia/blanja-api.git">
+<a href="https://github.com/Leha-leha/Recipe_API">
 <img src="https://img.shields.io/badge/Blanja%20Backend-Repository-blue.svg?style=popout&logo=github"/>
 </a>
