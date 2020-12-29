@@ -34,8 +34,8 @@ const Router = () => {
           <PrivateRoute path="/profile" component={Profile} />
           <Route path="/chat" component={Chat} />
           <PrivateRoute path="/addRecipe" component={addRecipe} />
-          <Route exact path="/recipe/:id" component={DetailRecipe} />
-          <Route exact path="/recipe/:id/:video" component={DetailVideo} />
+          <PrivateRoute exact path="/recipe/:id" component={DetailRecipe} />
+          <PrivateRoute exact path="/recipe/:id/:video" component={DetailVideo} />
           <Route path="*" component={NotFound} />
         </Switch>
       </BrowserRouter>
