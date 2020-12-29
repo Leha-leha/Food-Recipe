@@ -154,13 +154,23 @@ class Detail extends Component {
       .then((res) => {
         console.log(res);
         this.setState({
-          msg: res.data.msg,
+          msg: res.data.msg.
+          this.unLiked("error")
         });
       })
       .catch((err) => {
         console.log(err);
+        this.unLiked("success")
       });
   };
+
+  unLiked = (arg) => {
+    if (arg === "success"){
+      toast.warn("You unlike recipes")
+    } else if (arg === "error"){
+      toast.error("error")
+    }
+  }
 
   addSave = async () => {
     const { id } = this.props.match.params;
@@ -174,13 +184,23 @@ class Detail extends Component {
       .then((res) => {
         console.log(res);
         this.setState({
-          msg: res.data.msg,
+          msg: res.data.msg.
+          this.saved("error")
         });
       })
       .catch((err) => {
         console.log(err);
+        this.saved("success")
       });
   };
+
+  saved = (arg) => {
+    if (arg === "success"){
+      toast.warn("You save recipes")
+    } else if (arg === "error"){
+      toast.error("error")
+    }
+  }
 
   unSave = async () => {
     const { id } = this.props.match.params;
@@ -193,13 +213,23 @@ class Detail extends Component {
       .then((res) => {
         console.log(res);
         this.setState({
-          msg: res.data.msg,
+          msg: res.data.msg.
+          this.unSaved("error")
         });
       })
       .catch((err) => {
         console.log(err);
+        this.unSaved("success")
       });
   };
+
+  unSaved = (arg) => {
+    if (arg === "success"){
+      toast.warn("You unsave recipes")
+    } else if (arg === "error"){
+      toast.error("error")
+    }
+  }
 
   deleteComment = async (id) => {
     console.log(`hapus comment ${id}`);
