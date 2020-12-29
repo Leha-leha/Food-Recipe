@@ -6,6 +6,7 @@ import EditProfileBtn from "../../assets/icons/edit-image.png";
 import Trash from "../../assets/icons/trash.png";
 import { toast } from "react-toastify";
 
+
 import axios from "axios";
 
 import detail from "./Detail.module.css";
@@ -139,7 +140,7 @@ class Detail extends Component {
     if (arg === "success") {
       toast.warn("Your Already Like");
     } else if (arg === "Error") {
-      toast.success("Your like this recipe");
+      toast.info("Your unlike this recipe");
     }
   };
 
