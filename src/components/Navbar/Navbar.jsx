@@ -2,6 +2,9 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { deleteLogout } from "../../redux/actionCreators/auth"
+import { ToastContainer , Toast, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 import css from "./Navbar.module.css";
 
@@ -24,9 +27,10 @@ class Navbar extends React.Component {
       localStorage.removeItem('userId')
 
       this.setNavbar()
-      this.props.history.push('/')
+      this.props.history.push('/') 
     }
   };
+  
 
   setNavbar = () => {
     const token = localStorage.getItem('token')
