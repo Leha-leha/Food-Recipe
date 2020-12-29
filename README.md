@@ -11,7 +11,7 @@
 
 ## Description
 
-**Blanja Web** is a recipe sharing service that allowing visitors to upload and search through user-created recipes. 
+**Recipes Food** is a recipe sharing service that allowing visitors to upload and search through user-created recipes. 
 
 ## Features
 
