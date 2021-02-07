@@ -76,7 +76,7 @@ class Profile extends Component {
     };
     const userid = await localStorage.getItem("userId");
     axios
-      .get(`http://localhost:5000/user/${userid}`, config)
+      .get(`${process.env.REACT_APP_URL}/user/${userid}`, config)
       .then((res) => {
         const profile = res.data.data;
         this.setState({
@@ -92,7 +92,7 @@ class Profile extends Component {
   getMyRecipe = async () => {
     const userid = await localStorage.getItem("userId");
     axios
-      .get(`http://localhost:5000/recipes/${userid}`)
+      .get(`${process.env.REACT_APP_URL}/recipes/${userid}`)
       .then((res) => {
         this.setState({
           myrecipe: res.data.data,
@@ -106,7 +106,7 @@ class Profile extends Component {
   getLikedRecipe = async () => {
     const userid = await localStorage.getItem("userId");
     axios
-      .get(`http://localhost:5000/likes/${userid}`)
+      .get(`${process.env.REACT_APP_URL}/likes/${userid}`)
       .then((res) => {
         this.setState({
           likedrecipe: res.data.data,
@@ -120,7 +120,7 @@ class Profile extends Component {
   getSavedRecipe = async () => {
     const userid = await localStorage.getItem("userId");
     axios
-      .get(`http://localhost:5000/saves/${userid}`)
+      .get(`${process.env.REACT_APP_URL}/saves/${userid}`)
       .then((res) => {
         this.setState({
           savedrecipe: res.data.data,
@@ -136,7 +136,7 @@ class Profile extends Component {
     data.append("img", this.state.file);
     const userid = await localStorage.getItem("userId");
     await axios
-      .patch(`http://localhost:5000/user/${userid}`, data)
+      .patch(`${process.env.REACT_APP_URL}/user/${userid}`, data)
       .then((res) => {
         console.log(res);
       })
@@ -157,7 +157,7 @@ class Profile extends Component {
     console.log(data);
     const userid = await localStorage.getItem("userId");
     await axios
-      .patch(`http://localhost:5000/newpass/${userid}`, data)
+      .patch(`${process.env.REACT_APP_URL}/newpass/${userid}`, data)
       .then((res) => {
         console.log(res);
       })

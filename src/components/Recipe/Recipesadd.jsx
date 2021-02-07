@@ -68,7 +68,7 @@ class Recipesadd extends Component {
       formdata.append("videos", params.videos[j]);
     }
 
-    const getUrl = "http://localhost:5000/recipes";
+    const getUrl = `${process.env.REACT_APP_URL}/recipes`;
 
     // const FormData = require('form-data')
     // const qs = require('querystring')

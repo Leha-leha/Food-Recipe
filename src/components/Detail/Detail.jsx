@@ -6,7 +6,6 @@ import EditProfileBtn from "../../assets/icons/edit-image.png";
 import Trash from "../../assets/icons/trash.png";
 import { toast } from "react-toastify";
 
-
 import axios from "axios";
 
 import detail from "./Detail.module.css";
@@ -71,7 +70,7 @@ class Detail extends Component {
     const { id } = this.props.match.params;
     const userid = await localStorage.getItem("userId");
     await axios
-      .get(`http://localhost:5000/comments/${id}`)
+      .get(`${process.env.REACT_APP_URL}/comments/${id}`)
       .then((res) => {
         console.log(res);
         this.setState({
@@ -99,7 +98,7 @@ class Detail extends Component {
       comment: this.state.addComment,
     };
     await axios
-      .post("http://localhost:5000/comments", data)
+      .post(`${process.env.REACT_APP_URL}/comments`, data)
       .then((res) => {
         console.log(res);
         this.setState({
@@ -123,7 +122,7 @@ class Detail extends Component {
       user_id: userid,
     };
     axios
-      .post("http://localhost:5000/likes", data)
+      .post(`${process.env.REACT_APP_URL}/likes`, data)
       .then((res) => {
         console.log(res);
         this.setState({
@@ -151,27 +150,26 @@ class Detail extends Component {
       user_id: userid,
     };
     axios
-      .delete(`http://localhost:5000/likes/${id}`, { data: data })
+      .delete(`${process.env.REACT_APP_URL}/likes/${id}`, { data: data })
       .then((res) => {
         console.log(res);
         this.setState({
-          msg: res.data.msg.
-          this.unLiked("error")
+          msg: res.data.msg.this.unLiked("error"),
         });
       })
       .catch((err) => {
         console.log(err);
-        this.unLiked("success")
+        this.unLiked("success");
       });
   };
 
   unLiked = (arg) => {
-    if (arg === "success"){
-      toast.warn("You unlike recipes")
-    } else if (arg === "error"){
-      toast.error("error")
+    if (arg === "success") {
+      toast.warn("You unlike recipes");
+    } else if (arg === "error") {
+      toast.error("error");
     }
-  }
+  };
 
   addSave = async () => {
     const { id } = this.props.match.params;
@@ -181,27 +179,26 @@ class Detail extends Component {
       user_id: userid,
     };
     axios
-      .post("http://localhost:5000/saves", data)
+      .post(`${process.env.REACT_APP_URL}/saves`, data)
       .then((res) => {
         console.log(res);
         this.setState({
-          msg: res.data.msg.
-          this.saved("error")
+          msg: res.data.msg.this.saved("error"),
         });
       })
       .catch((err) => {
         console.log(err);
-        this.saved("success")
+        this.saved("success");
       });
   };
 
   saved = (arg) => {
-    if (arg === "success"){
-      toast.warn("You save recipes")
-    } else if (arg === "error"){
-      toast.error("error")
+    if (arg === "success") {
+      toast.warn("You save recipes");
+    } else if (arg === "error") {
+      toast.error("error");
     }
-  }
+  };
 
   unSave = async () => {
     const { id } = this.props.match.params;
@@ -210,32 +207,31 @@ class Detail extends Component {
       user_id: userid,
     };
     axios
-      .delete(`http://localhost:5000/saves/${id}`, { data: data })
+      .delete(`${process.env.REACT_APP_URL}/saves/${id}`, { data: data })
       .then((res) => {
         console.log(res);
         this.setState({
-          msg: res.data.msg.
-          this.unSaved("error")
+          msg: res.data.msg.this.unSaved("error"),
         });
       })
       .catch((err) => {
         console.log(err);
-        this.unSaved("success")
+        this.unSaved("success");
       });
   };
 
   unSaved = (arg) => {
-    if (arg === "success"){
-      toast.warn("You unsave recipes")
-    } else if (arg === "error"){
-      toast.error("error")
+    if (arg === "success") {
+      toast.warn("You unsave recipes");
+    } else if (arg === "error") {
+      toast.error("error");
     }
-  }
+  };
 
   deleteComment = async (id) => {
     console.log(`hapus comment ${id}`);
     await axios
-      .delete(`http://localhost:5000/comments/${id}`)
+      .delete(`${process.env.REACT_APP_URL}/comments/${id}`)
       .then((res) => {
         console.log(res);
       })
@@ -248,7 +244,7 @@ class Detail extends Component {
   deleteRecipe = async () => {
     const { id } = this.props.match.params;
     await axios
-      .delete(`http://localhost:5000/recipe/${id}`)
+      .delete(`${process.env.REACT_APP_URL}/recipe/${id}`)
       .then((res) => {
         console.log(res);
       })
@@ -287,7 +283,7 @@ class Detail extends Component {
       }
     }
     await axios
-      .patch(`http://localhost:5000/recipe/${id}`, data)
+      .patch(`${process.env.REACT_APP_URL}/recipe/${id}`, data)
       .then((res) => {
         console.log(res);
       })
