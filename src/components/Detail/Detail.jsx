@@ -34,6 +34,7 @@ class Detail extends Component {
     desc_rcp: "",
     img: null,
     videos: null,
+    liked: false,
   };
 
   getRecipeById = async () => {
@@ -64,6 +65,24 @@ class Detail extends Component {
       });
     }
     // console.log(this.state)
+  };
+
+  getlike = async () => {
+    const { id } = this.props.match.params;
+    const userid = localStorage.getItem("userId");
+    await axios
+      .get(`${process.env.REACT_APP_URL}/likes/detail/${id}/${userid}`)
+      .then((res) => {
+        console.log("GET LIKE");
+        console.log(res.data.data.length);
+        const liked = res.data.data.length;
+        liked === 1
+          ? this.setState({ liked: true })
+          : this.setState({ liked: false });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   getCommentByRecipe = async () => {
@@ -126,6 +145,9 @@ class Detail extends Component {
       .then((res) => {
         console.log(res);
         this.setState({
+          liked: true,
+        });
+        this.setState({
           msg: res.data.msg.this.notify("Error"),
         });
       })
@@ -153,6 +175,9 @@ class Detail extends Component {
       .delete(`${process.env.REACT_APP_URL}/likes/${id}`, { data: data })
       .then((res) => {
         console.log(res);
+        this.setState({
+          liked: false,
+        });
         this.setState({
           msg: res.data.msg.this.unLiked("error"),
         });
@@ -299,14 +324,16 @@ class Detail extends Component {
   componentDidMount = () => {
     this.getRecipeById();
     this.getCommentByRecipe();
+    this.getlike();
   };
 
   render() {
     const { isPending } = this.props.recipes;
-    const userid = localStorage.getItem("userId");
-    console.log(this.state.editRecipe);
+    const userid = Number(localStorage.getItem("userId"));
+    // console.log(this.state.editRecipe);
     const { comments } = this.state;
     console.log(this.state.msg);
+    console.log(this.state.liked);
     const IdUserRecipe = this.state.recipe.id_user;
     const { title_rcp, ingridients_rcp, desc_rcp } = this.state;
     return (
@@ -341,15 +368,19 @@ class Detail extends Component {
             <div className={detail.SavedButton}>
               <img src={SavedIcon} alt="" onClick={this.addSave} />
             </div>
-            <div className={detail.LikedButton}>
-              <img src={LikedIcon} alt="" onClick={this.addLike} />
-            </div>
+
             {/* Unlike & UnSave */}
+            {this.state.liked ? (
+              <div className={detail.UnLikedButton}>
+                <img src={LikedIcon} alt="" onClick={this.unLike} />
+              </div>
+            ) : (
+              <div className={detail.LikedButton}>
+                <img src={LikedIcon} alt="" onClick={this.addLike} />
+              </div>
+            )}
             <div className={detail.UnSavedButton}>
               <img src={SavedIcon} alt="" onClick={this.unSave} />
-            </div>
-            <div className={detail.UnLikedButton}>
-              <img src={LikedIcon} alt="" onClick={this.unLike} />
             </div>
           </div>
         </div>
@@ -396,9 +427,9 @@ class Detail extends Component {
             <h2 className={detail.TextComment}>Comment</h2>
             {comments !== 0 &&
               comments.map(
-                ({ comment, name_user, photo_user, id_user, id }) => {
+                ({ comment, name_user, photo_user, id_user, id }, index) => {
                   return (
-                    <div className={"d-flex " + detail.CommentItem}>
+                    <div className={"d-flex " + detail.CommentItem} key={index}>
                       <div
                         className={detail.ImageItem}
                         style={{
@@ -415,14 +446,27 @@ class Detail extends Component {
                         </span>
                         <br />
                         {id_user === userid && (
-                          <button
+                          <Button
                             onClick={() => {
                               console.log(id);
                               this.deleteComment(id);
                             }}
+                            style={{
+                              backgroundColor: "#EFC81A",
+                              color: "black",
+                              borderWidth: 0,
+                              padding: 3,
+                            }}
                           >
-                            delete
-                          </button>
+                            <span
+                              style={{
+                                marginBottom: 0,
+                                fontFamily: "Airbnb Cereal App Light",
+                              }}
+                            >
+                              delete
+                            </span>
+                          </Button>
                         )}
                       </div>
                     </div>

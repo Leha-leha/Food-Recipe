@@ -42,11 +42,12 @@
 }
 
 .UnSavedButton {
-  background-color: #1aefa8;
+  background-color: #808080;
 }
 
 .UnLikedButton {
-  background-color: #1aefa8;
+  background-color: #fff;
+  transform: rotate(180deg);
 }
 
 .SavedButton img {
