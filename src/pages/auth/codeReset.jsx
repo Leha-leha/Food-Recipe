@@ -28,7 +28,7 @@ export default class Code extends Component {
       .post("http://localhost:5000/auth/otp", data)
       .then((res) => {
         console.log(res);
-        res.data.status == 200 && this.props.history.push("/reset");
+        res.data.status === 200 && this.props.history.push("/reset");
       })
       .catch((err) => {
         console.log(err);

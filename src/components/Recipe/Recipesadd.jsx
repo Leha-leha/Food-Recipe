@@ -127,7 +127,7 @@ class Recipesadd extends Component {
                       placeholder="Add"
                       multiple
                     />
-                    <img src={this.state.file} alt="Add photo" />
+                    <img src={this.state.file} alt="Add newphoto" />
                   </div>
                 </div>
               </Jumbotron>

@@ -15,7 +15,7 @@ import { getSingleRecipe } from "../../redux/actionCreators/Recipes";
 import LikedIcon from "../../assets/icons/like.png";
 import SavedIcon from "../../assets/icons/saved.png";
 import PlayIcon from "../../assets/icons/play.png";
-import PhotoUser from "../../assets/photo-comment.png";
+// import PhotoUser from "../../assets/photo-comment.png";
 
 class Detail extends Component {
   state = {
@@ -68,7 +68,7 @@ class Detail extends Component {
 
   getCommentByRecipe = async () => {
     const { id } = this.props.match.params;
-    const userid = await localStorage.getItem("userId");
+    // const userid = await localStorage.getItem("userId");
     await axios
       .get(`${process.env.REACT_APP_URL}/comments/${id}`)
       .then((res) => {
@@ -327,7 +327,7 @@ class Detail extends Component {
             backgroundImage: `url(${!isPending && this.state.imgRecipe})`,
           }}
         >
-          {IdUserRecipe == userid && (
+          {IdUserRecipe === userid && (
             <div className="d-flex justify-content-end mr-2">
               <div className={detail.SavedButton} onClick={this.deleteRecipe}>
                 <img src={Trash} alt="" />
@@ -414,15 +414,15 @@ class Detail extends Component {
                           {comment}
                         </span>
                         <br />
-                        {id_user == userid && (
-                          <a
+                        {id_user === userid && (
+                          <button
                             onClick={() => {
                               console.log(id);
                               this.deleteComment(id);
                             }}
                           >
                             delete
-                          </a>
+                          </button>
                         )}
                       </div>
                     </div>

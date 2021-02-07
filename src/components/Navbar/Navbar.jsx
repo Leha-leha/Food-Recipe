@@ -1,83 +1,78 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { deleteLogout } from "../../redux/actionCreators/auth"
-import { ToastContainer , Toast, toast } from "react-toastify";
+import { deleteLogout } from "../../redux/actionCreators/auth";
+// import { ToastContainer , Toast, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 import css from "./Navbar.module.css";
 
-
 class Navbar extends React.Component {
   state = {
-    isLogin: false
-  }
+    isLogin: false,
+  };
 
   logout = async (e) => {
-    e.preventDefault()
-    
-    const token = localStorage.getItem('token')
-    await this.props.dispatch(deleteLogout(token))
+    e.preventDefault();
 
-    const { auth } = this.props
+    const token = localStorage.getItem("token");
+    await this.props.dispatch(deleteLogout(token));
+
+    const { auth } = this.props;
 
     if (auth.data.data.msg) {
-      localStorage.removeItem('token')
-      localStorage.removeItem('userId')
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
 
-      this.setNavbar()
-      this.props.history.push('/') 
+      this.setNavbar();
+      this.props.history.push("/");
     }
   };
-  
 
   setNavbar = () => {
-    const token = localStorage.getItem('token')
-    const user = localStorage.getItem('userId')
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("userId");
 
     if (token && user) {
       this.setState({
-        isLogin: true
-      })
+        isLogin: true,
+      });
     } else {
       this.setState({
-        isLogin: false
-      })
+        isLogin: false,
+      });
     }
-  }
+  };
 
   cekLoginComponent = (login) => {
     if (!login) {
       return (
-        <ul className={`navbar-nav mb-2 mt-4 ms-auto mb-lg-0 ` + css.Auth} >
-          <li
-            className="nav-item"
-          >
+        <ul className={`navbar-nav mb-2 mt-4 ms-auto mb-lg-0 ` + css.Auth}>
+          <li className="nav-item">
             <Link to={{ pathname: "/login" }} className="nav-link">
               <i className="fas fa-user-circle me-2"></i>
               Login
             </Link>
           </li>
         </ul>
-      )
+      );
     } else {
       return (
-        <ul className={`navbar-nav mb-2 mt-4 ms-auto mb-lg-0 ${css.Auth}`} >
+        <ul className={`navbar-nav mb-2 mt-4 ms-auto mb-lg-0 ${css.Auth}`}>
           <li className="nav-item">
-            <Link to={{ pathname: '/' }} onClick={this.logout} >
+            <Link to={{ pathname: "/" }} onClick={this.logout}>
               <i className="fas fa-user-circle me-2"></i>
               Logout
             </Link>
           </li>
         </ul>
-      )
+      );
     }
-  }
+  };
 
   componentDidMount = () => {
-    this.setNavbar()
-  }
+    this.setNavbar();
+  };
 
   render() {
     return (
