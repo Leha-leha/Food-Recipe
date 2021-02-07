@@ -11,7 +11,7 @@
 
 ## Description
 
-**Blanja Web** is a recipe sharing service that allowing visitors to upload and search through user-created recipes. 
+**Recipes Food** is a recipe sharing service that allowing visitors to upload and search through user-created recipes. 
 
 ## Features
 
@@ -51,5 +51,5 @@ Let's try it.
 RESTful API for this web application.
 
 <a href="https://github.com/Leha-leha/Recipe_API">
-<img src="https://img.shields.io/badge/Blanja%20Backend-Repository-blue.svg?style=popout&logo=github"/>
+<img src="https://img.shields.io/badge/Food%20Recipes-Repository-blue.svg?style=popout&logo=github"/>
 </a>
