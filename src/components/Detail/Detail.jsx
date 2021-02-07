@@ -35,6 +35,7 @@ class Detail extends Component {
     img: null,
     videos: null,
     liked: false,
+    saved: false,
   };
 
   getRecipeById = async () => {
@@ -79,6 +80,24 @@ class Detail extends Component {
         liked === 1
           ? this.setState({ liked: true })
           : this.setState({ liked: false });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  getsave = async () => {
+    const { id } = this.props.match.params;
+    const userid = localStorage.getItem("userId");
+    await axios
+      .get(`${process.env.REACT_APP_URL}/saves/detail/${id}/${userid}`)
+      .then((res) => {
+        //console.log("GET Save");
+        console.log(res.data.data.length);
+        const liked = res.data.data.length;
+        liked === 1
+          ? this.setState({ saved: true })
+          : this.setState({ saved: false });
       })
       .catch((err) => {
         console.log(err);
@@ -208,6 +227,9 @@ class Detail extends Component {
       .then((res) => {
         console.log(res);
         this.setState({
+          saved: true,
+        });
+        this.setState({
           msg: res.data.msg.this.saved("error"),
         });
       })
@@ -235,6 +257,9 @@ class Detail extends Component {
       .delete(`${process.env.REACT_APP_URL}/saves/${id}`, { data: data })
       .then((res) => {
         console.log(res);
+        this.setState({
+          saved: false,
+        });
         this.setState({
           msg: res.data.msg.this.unSaved("error"),
         });
@@ -365,11 +390,18 @@ class Detail extends Component {
             </div>
           )}
           <div className={detail.ButtonList}>
-            <div className={detail.SavedButton}>
-              <img src={SavedIcon} alt="" onClick={this.addSave} />
-            </div>
+            {/* save & unsave */}
+            {this.state.saved ? (
+              <div className={detail.UnSavedButton}>
+                <img src={SavedIcon} alt="" onClick={this.unSave} />
+              </div>
+            ) : (
+              <div className={detail.SavedButton}>
+                <img src={SavedIcon} alt="" onClick={this.addSave} />
+              </div>
+            )}
 
-            {/* Unlike & UnSave */}
+            {/* like & unlike */}
             {this.state.liked ? (
               <div className={detail.UnLikedButton}>
                 <img src={LikedIcon} alt="" onClick={this.unLike} />
@@ -379,9 +411,6 @@ class Detail extends Component {
                 <img src={LikedIcon} alt="" onClick={this.addLike} />
               </div>
             )}
-            <div className={detail.UnSavedButton}>
-              <img src={SavedIcon} alt="" onClick={this.unSave} />
-            </div>
           </div>
         </div>
         <div className={"mx-auto " + detail.Description}>
