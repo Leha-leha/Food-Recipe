@@ -464,7 +464,9 @@ class Detail extends Component {
                       <div
                         className={detail.ImageItem}
                         style={{
-                          backgroundImage: `url(${JSON.parse(photo_user)})`,
+                          backgroundImage: `url(${
+                            url + JSON.parse(photo_user)
+                          })`,
                         }}
                       ></div>
                       <div className={detail.CommentUser}>

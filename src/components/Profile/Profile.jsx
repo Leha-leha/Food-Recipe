@@ -8,6 +8,8 @@ import EditProfileBtn from "../../assets/icons/edit-image.png";
 
 import ListRecipe from "../../components/ListRecipe/ListRecipe";
 
+const url = process.env.REACT_APP_URL;
+
 class Profile extends Component {
   state = {
     showEdit: false,
@@ -189,6 +191,7 @@ class Profile extends Component {
     const { myrecipe, likedrecipe, savedrecipe, profileData } = this.state;
     // console.log(myrecipe);
     console.log("RE RENDER HERE");
+    console.log(profileData[0]);
     return (
       <>
         <div className={profile.Section}>
@@ -201,7 +204,7 @@ class Profile extends Component {
                     style={{
                       backgroundImage: `url(${
                         photo_user !== null
-                          ? JSON.parse(photo_user)
+                          ? url + JSON.parse(photo_user)
                           : ImageProfile
                       })`,
                     }}
