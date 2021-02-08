@@ -89,7 +89,7 @@ class Navbar extends React.Component {
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
-              <i class="fas fa-bars"></i>
+              <i className="fas fa-bars"></i>
             </button>
             <div
               className="collapse navbar-collapse"

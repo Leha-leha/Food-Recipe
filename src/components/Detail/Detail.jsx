@@ -17,6 +17,8 @@ import SavedIcon from "../../assets/icons/saved.png";
 import PlayIcon from "../../assets/icons/play.png";
 // import PhotoUser from "../../assets/photo-comment.png";
 
+const url = process.env.REACT_APP_URL;
+
 class Detail extends Component {
   state = {
     recipe: {},
@@ -376,7 +378,7 @@ class Detail extends Component {
         <div
           className={"mx-auto " + detail.ImageSize}
           style={{
-            backgroundImage: `url(${!isPending && this.state.imgRecipe})`,
+            backgroundImage: `url(${!isPending && url + this.state.imgRecipe})`,
           }}
         >
           {IdUserRecipe === userid && (

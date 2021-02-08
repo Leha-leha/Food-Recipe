@@ -15,7 +15,7 @@ class PopularRecipe extends React.Component {
       .get(`${process.env.REACT_APP_URL}/recipes`)
       .then(({ data }) => {
         this.setState({
-          PopularRecipes: data
+          PopularRecipes: data,
         });
       })
       .catch((err) => console.log(err));
@@ -30,7 +30,7 @@ class PopularRecipe extends React.Component {
     return (
       <main id={css.Main}>
         <div style={{ float: "none" }}></div>
-        <div className='container'>
+        <div className="container">
           <div className={`${css.HeadLine} mb-5`}>
             <h2>Popular Recipe</h2>
           </div>
@@ -38,9 +38,10 @@ class PopularRecipe extends React.Component {
             {PopularRecipes.data &&
               PopularRecipes.data
                 .filter((item, index) => index < 8) // limit the recipes
-                .map(({ title_rcp, img_rcp, id_rcp }) => {
+                .map(({ title_rcp, img_rcp, id_rcp }, index) => {
                   return (
                     <ListRecipe
+                      key={index}
                       idUrl={id_rcp}
                       img={JSON.parse(img_rcp)[0]}
                       title={title_rcp}
@@ -50,7 +51,7 @@ class PopularRecipe extends React.Component {
           </div>
         </div>
         <footer>
-          <div className='container'>
+          <div className="container">
             <div className={css.Slogan}>
               <h1>Eat, Cook, Repeat</h1>
               <p>Share your best recipe by uploading here !</p>
@@ -58,16 +59,16 @@ class PopularRecipe extends React.Component {
             <div className={css.FooterNav}>
               <ul className={css.MainNav}>
                 <li>
-                  <a href='#product'>Product</a>
+                  <a href="#product">Product</a>
                 </li>
                 <li>
-                  <a href='#company'>Company</a>
+                  <a href="#company">Company</a>
                 </li>
                 <li>
-                  <a href='#learn'>Learn More</a>
+                  <a href="#learn">Learn More</a>
                 </li>
                 <li>
-                  <a href='#contact'>Get In Touch</a>
+                  <a href="#contact">Get In Touch</a>
                 </li>
               </ul>
             </div>
